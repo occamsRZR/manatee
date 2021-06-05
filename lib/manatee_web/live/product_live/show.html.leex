@@ -1,0 +1,47 @@
+<h1>Show Product</h1>
+
+<%= if @live_action in [:edit] do %>
+  <%= live_modal @socket, ManateeWeb.ProductLive.FormComponent,
+    id: @product.id,
+    title: @page_title,
+    action: @live_action,
+    product: @product,
+    return_to: Routes.product_show_path(@socket, :show, @product) %>
+<% end %>
+
+<ul>
+
+  <li>
+    <strong>Name:</strong>
+    <%= @product.name %>
+  </li>
+
+  <li>
+    <strong>Ingredients:</strong>
+    <%= @product.ingredients %>
+  </li>
+
+  <li>
+    <strong>Rate:</strong>
+    <%= @product.rate %>
+  </li>
+
+  <li>
+    <strong>Rate unit:</strong>
+    <%= @product.rate_unit %>
+  </li>
+
+  <li>
+    <strong>Interval:</strong>
+    <%= @product.interval %>
+  </li>
+
+  <li>
+    <strong>Interval unit:</strong>
+    <%= @product.interval_unit %>
+  </li>
+
+</ul>
+
+<span><%= live_patch "Edit", to: Routes.product_show_path(@socket, :edit, @product), class: "button" %></span>
+<span><%= live_redirect "Back", to: Routes.product_index_path(@socket, :index) %></span>

@@ -1,6 +1,7 @@
 defmodule ManateeWeb.Router do
   use ManateeWeb, :router
-  use Kaffy.Routes #, scope: "/admin", pipe_through: [:some_plug, :authenticate]
+  # , scope: "/admin", pipe_through: [:some_plug, :authenticate]
+  use Kaffy.Routes
 
   import ManateeWeb.UserAuth
 
@@ -36,6 +37,14 @@ defmodule ManateeWeb.Router do
     pipe_through :browser
 
     live "/", PageLive, :index
+    resources "/locations", LocationController
+
+    live "/products", ProductLive.Index, :index
+    live "/products/new", ProductLive.Index, :new
+    live "/products/:id/edit", ProductLive.Index, :edit
+
+    live "/products/:id", ProductLive.Show, :show
+    live "/products/:id/show/edit", ProductLive.Show, :edit
   end
 
   # Other scopes may use custom stacks.
@@ -92,11 +101,11 @@ defmodule ManateeWeb.Router do
     get "/users/confirm/:token", UserConfirmationController, :confirm
   end
 
-  if Mix.env == :dev do
+  if Mix.env() == :dev do
     forward "/sent_emails", Bamboo.SentEmailViewerPlug
   end
 
-  if Mix.env == :dev do
+  if Mix.env() == :dev do
     forward "/graphiql", Absinthe.Plug.GraphiQL, schema: ManateeWeb.Schema
   end
 end

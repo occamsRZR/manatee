@@ -1,0 +1,33 @@
+<h1>Show Location</h1>
+
+<ul>
+
+  <li>
+    <strong>Name:</strong>
+    <%= @location.name %>
+  </li>
+
+  <li>
+    <strong>Address:</strong>
+    <%= @location.address %>
+  </li>
+
+  <li>
+    <strong>City:</strong>
+    <%= @location.city %>
+  </li>
+
+  <li>
+    <strong>State:</strong>
+    <%= @location.state %>
+  </li>
+
+  <li>
+    <strong>Zip:</strong>
+    <%= @location.zip %>
+  </li>
+
+</ul>
+
+<span><%= link "Edit", to: Routes.location_path(@conn, :edit, @location) %></span>
+<span><%= link "Back", to: Routes.location_path(@conn, :index) %></span>
