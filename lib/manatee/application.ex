@@ -14,10 +14,10 @@ defmodule Manatee.Application do
       # Start the PubSub system
       {Phoenix.PubSub, name: Manatee.PubSub},
       # Start the Endpoint (http/https)
-      ManateeWeb.Endpoint,
+      ManateeWeb.Endpoint
       # Start a worker by calling: Manatee.Worker.start_link(arg)
       # {Manatee.Worker, arg}
-      {Oban, oban_config()}
+      # {Oban, oban_config()}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

@@ -6,7 +6,7 @@ defmodule Manatee.Products.Product do
   @foreign_key_type :binary_id
   schema "products" do
     field :ingredients, :string
-    field :interval, :integer
+    field :interval, :string
     field :interval_unit, :string
     field :name, :string
     field :rate, :float
