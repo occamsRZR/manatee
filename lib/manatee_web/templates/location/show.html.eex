@@ -27,6 +27,16 @@
     <%= @location.zip %>
   </li>
 
+    <li>
+    <strong>Lat:</strong>
+    <%= @location.lat %>
+  </li>
+
+    <li>
+    <strong>Lon:</strong>
+    <%= @location.lon %>
+  </li>
+
 </ul>
 
 <span><%= link "Edit", to: Routes.location_path(@conn, :edit, @location) %></span>
