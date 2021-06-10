@@ -1,5 +1,6 @@
 defmodule Manatee.MixProject do
   use Mix.Project
+
   def project do
     [
       app: :manatee,
@@ -12,6 +13,7 @@ defmodule Manatee.MixProject do
       deps: deps()
     ]
   end
+
   # Configuration for the OTP application.
   #
   # Type `mix help compile.app` for more information.
@@ -21,6 +23,7 @@ defmodule Manatee.MixProject do
       extra_applications: [:logger, :runtime_tools]
     ]
   end
+
   # Specifies which paths to compile per environment.
   defp elixirc_paths(:test), do: ["lib", "test/support"]
   defp elixirc_paths(_), do: ["lib"]
@@ -35,7 +38,6 @@ defmodule Manatee.MixProject do
 
       # Kaffy administration
       {:kaffy, "~> 0.9.0"},
-
       {:guardian, "~> 2.0"},
       {:phoenix, "~> 1.5.7"},
       {:phoenix_ecto, "~> 4.1"},
@@ -60,6 +62,9 @@ defmodule Manatee.MixProject do
       {:premailex, "~> 0.3.0"},
       {:floki, ">= 0.0.0"},
 
+      # Geocoding locations
+      {:geocoder, "~> 1.1"},
+
       # Waffle for file upload
       {:waffle, "~> 1.1.1"},
       {:waffle_ecto, "~> 0.0.9"},
@@ -72,9 +77,10 @@ defmodule Manatee.MixProject do
       {:bcrypt_elixir, "~> 2.0"},
       {:credo, "~> 1.5", only: [:dev, :test], runtime: false},
       {:sobelow, "~> 0.8", only: :dev},
-      {:ecto_psql_extras, "~> 0.2"},
+      {:ecto_psql_extras, "~> 0.2"}
     ]
   end
+
   # Aliases are shortcuts or tasks specific to the current project.
   # For example, to install project dependencies and perform other setup tasks, run:
   #
