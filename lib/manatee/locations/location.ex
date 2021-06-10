@@ -25,7 +25,6 @@ defmodule Manatee.Locations.Location do
   end
 
   defp geocode(changeset, location) do
-    # if there weren't
     location_info = Map.merge(location, changeset.changes)
 
     {:ok, coordinates} =
