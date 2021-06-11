@@ -17,6 +17,8 @@ defmodule ManateeWeb.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
+
+    resources "/location_weathers", LocationWeatherController, except: [:new, :edit]
   end
 
   pipeline :api_authenticated do
