@@ -10,7 +10,7 @@ defmodule ManateeWeb.LocationController do
   end
 
   def new(conn, _params) do
-    changeset = Locations.change_location(%Location{})
+    changeset = Locations.change_location(%Location{address: "", state: "", city: "", zip: ""})
     render(conn, "new.html", changeset: changeset)
   end
 

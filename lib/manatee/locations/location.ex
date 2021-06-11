@@ -24,22 +24,27 @@ defmodule Manatee.Locations.Location do
     |> geocode(location)
   end
 
-  defp geocode(changeset, location) do
-    location_info = Map.merge(location, changeset.changes)
+  defp geocode(%Ecto.Changeset{errors: errors} = changeset, location) do
+    unless Enum.any?(errors) do
+      location_info = Map.merge(location, changeset.changes)
 
-    {:ok, coordinates} =
-      Geocoder.call(
-        location_info.address <>
-          " " <>
-          location_info.city <>
-          ", " <>
-          location_info.state <>
-          " " <>
-          location_info.zip
-      )
+      {:ok, coordinates} =
+        Geocoder.call(
+          location_info.address <>
+            " " <>
+            location_info.city <>
+            ", " <>
+            location_info.state <>
+            " " <>
+            location_info.zip
+        )
 
-    lat = coordinates.lat
-    lon = coordinates.lon
-    change(changeset, %{lat: lat, lon: lon})
+      lat = coordinates.lat
+      lon = coordinates.lon
+
+      change(changeset, %{lat: lat, lon: lon})
+    else
+      changeset
+    end
   end
 end
