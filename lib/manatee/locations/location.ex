@@ -12,6 +12,7 @@ defmodule Manatee.Locations.Location do
     field :zip, :string
     field :lat, :float
     field :lon, :float
+    has_many :location_weathers, LocationWeather
 
     timestamps()
   end
