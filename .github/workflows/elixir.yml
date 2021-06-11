@@ -1,0 +1,44 @@
+name: Elixir CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+
+    name: Build and test
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Elixir
+      uses: erlef/setup-elixir@885971a72ed1f9240973bd92ab57af8c1aa68f24
+      with:
+        elixir-version: '1.10.3' # Define the elixir version [required]
+        otp-version: '22.3' # Define the OTP version [required]
+    - name: Restore dependencies cache
+      uses: actions/cache@v2
+      with:
+        path: deps
+        key: ${{ runner.os }}-mix-${{ hashFiles('**/mix.lock') }}
+        restore-keys: ${{ runner.os }}-mix-
+    - name: Install dependencies
+      run: mix deps.get
+    - name: Run tests
+      run: mix test
+    - name: Gigalixir Action
+    # You may pin to the exact commit or the version.
+    # uses: mhanberg/gigalixir-action@249654de0f9389232a5500e027eb9532a20539ca
+      uses: mhanberg/gigalixir-action@v0.4.0
+      with:
+        # Your Gigalixir username
+        GIGALIXIR_USERNAME: ""
+        # Your Gigalixir password
+        GIGALIXIR_PASSWORD: ""
+        # Your ssh private key that is paired with a public key that is uploaded to Gigalixir
+        SSH_PRIVATE_KEY: ""
+        # Your gigalixir app name
+        GIGALIXIR_APP: "manatee"
