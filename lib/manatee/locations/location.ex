@@ -28,21 +28,18 @@ defmodule Manatee.Locations.Location do
     unless Enum.any?(errors) do
       location_info = Map.merge(location, changeset.changes)
 
-      {:ok, coordinates} =
-        Geocoder.call(
-          location_info.address <>
-            " " <>
-            location_info.city <>
-            ", " <>
-            location_info.state <>
-            " " <>
-            location_info.zip
-        )
-
-      lat = coordinates.lat
-      lon = coordinates.lon
-
-      change(changeset, %{lat: lat, lon: lon})
+      with {:ok, coordinates} <-
+             Geocoder.call(
+               location_info.address <>
+                 " " <>
+                 location_info.city <>
+                 ", " <>
+                 location_info.state <>
+                 " " <>
+                 location_info.zip
+             ) do
+        change(changeset, %{lat: coordinates.lat, lon: coordinates.lon})
+      end
     else
       changeset
     end
