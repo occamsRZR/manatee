@@ -32,9 +32,9 @@ jobs:
           elixir-version: ${{ matrix.elixir }}
 
       - name: Setup Node
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v2
         with:
-          node-version: 13.8.0
+          node-version: '14'
 
       - uses: actions/cache@v1
         id: deps-cache
