@@ -4,9 +4,11 @@ defmodule Manatee.Locations do
   """
 
   import Ecto.Query, warn: false
+  use Timex
   alias Manatee.Repo
 
   alias Manatee.Locations.Location
+  alias Manatee.Locations.LocationWeather
 
   @doc """
   Returns the list of locations.
@@ -149,6 +151,30 @@ defmodule Manatee.Locations do
     %LocationWeather{}
     |> LocationWeather.changeset(attrs)
     |> Repo.insert()
+  end
+
+  @doc """
+  ## Examples
+
+      iex> backfill_location_weather(%{from: value})
+      {:ok, %LocationWeather{}}
+
+      iex> backfill_location_weather(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def backfill_location_weather(location_id) do
+    Interval.new(from: ~D[2021-06-14], until: ~D[2021-06-15])
+    |> Interval.with_step([days: 1]) 
+    |> Enum.map( fn dt ->  
+      ndt = Timex.to_datetime(dt) |> DateTime.to_unix()
+      IO.inspect(ndt)
+      [ok: data] = ExOwm.get_historical_weather([%{lat: 44.866889489795916, lon: -93.2793878367347, dt: ndt}]) 
+      temps = data["hourly"] |> Enum.map(fn hour -> hour["temp"] end)
+      min_temp = Enum.min(temps)
+      max_temp = Enum.max(temps)
+      create_location_weather(%{min_temp: min_temp, max_temp: max_temp, location_id: location_id, day: dt})
+    end)
   end
 
   @doc """
