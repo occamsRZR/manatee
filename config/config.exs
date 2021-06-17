@@ -34,6 +34,8 @@ config :manatee, ManateeWeb.AuthAccessPipeline,
   module: Manatee.Guardian,
   error_handler: ManateeWeb.AuthErrorHandler
 
+config :ex_owm, api_key: System.get_env("OWM_API_KEY")
+
 config :waffle,
   # or Waffle.Storage.Local
   storage: Waffle.Storage.S3,
