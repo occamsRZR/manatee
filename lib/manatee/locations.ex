@@ -150,18 +150,11 @@ defmodule Manatee.Locations do
   def create_location_weather(attrs \\ %{}) do
     %LocationWeather{}
     |> LocationWeather.changeset(attrs)
-    |> Repo.insert()
+    |> Repo.insert(on_conflict: :nothing)
   end
 
   @doc """
-  ## Examples
-
-      iex> backfill_location_weather(%{from: value})
-      {:ok, %LocationWeather{}}
-
-      iex> backfill_location_weather(%{field: bad_value})
-      {:error, %Ecto.Changeset{}}
-
+  Backfills a location's weather for the past 5 days (limit on OWM)
   """
   def backfill_location_weather(location_id) do
     location = get_location!(location_id)
