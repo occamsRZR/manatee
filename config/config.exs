@@ -50,8 +50,8 @@ config :ex_aws,
   region: System.get_env("AWS_REGION")
 
 config :manatee, Manatee.Mailer,
-  adapter: Bamboo.MandrillAdapter,
-  api_key: System.get_env("MANDRILL_API_KEY")
+  adapter: Bamboo.SendGridAdapter,
+  api_key: System.get_env("SENDGRID_API_KEY")
 
 config :kaffy,
   otp_app: :manatee,
@@ -62,11 +62,11 @@ config :manatee, Oban,
   repo: Manatee.Repo,
   queues: [default: 10, mailers: 20, events: 50, low: 5],
   plugins: [
-    Oban.Plugins.Pruner
-    # {Oban.Plugins.Cron,
-    #  crontab: [
-    #    {"0 8 * * *", Zerg.Workers.ExampleWorker},
-    #  ]}
+    Oban.Plugins.Pruner,
+    {Oban.Plugins.Cron,
+     crontab: [
+       {"0 6 * * *", Manatee.Workers.HistoricalWeatherWorker}
+     ]}
   ]
 
 # Import environment specific config. This must remain at the bottom
