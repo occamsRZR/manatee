@@ -51,7 +51,7 @@ config :ex_aws,
 
 config :manatee, Manatee.Mailer,
   adapter: Bamboo.MandrillAdapter,
-  api_key: "my_api_key"
+  api_key: System.get_env("MANDRILL_API_KEY")
 
 config :kaffy,
   otp_app: :manatee,
