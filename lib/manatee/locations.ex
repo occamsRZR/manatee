@@ -164,16 +164,26 @@ defmodule Manatee.Locations do
 
   """
   def backfill_location_weather(location_id) do
-    Interval.new(from: ~D[2021-06-14], until: ~D[2021-06-15])
-    |> Interval.with_step([days: 1]) 
-    |> Enum.map( fn dt ->  
-      ndt = Timex.to_datetime(dt) |> DateTime.to_unix()
-      IO.inspect(ndt)
-      [ok: data] = ExOwm.get_historical_weather([%{lat: 44.866889489795916, lon: -93.2793878367347, dt: ndt}]) 
+    location = get_location!(location_id)
+
+    Interval.new(from: Date.utc_today() |> Date.add(-5), until: [days: 5])
+    |> Interval.with_step(days: 1)
+    |> Enum.map(fn dt ->
+      unix_dt = Timex.to_datetime(dt) |> DateTime.to_unix()
+
+      [ok: data] =
+        ExOwm.get_historical_weather([%{lat: location.lat, lon: location.lon, dt: unix_dt}])
+
       temps = data["hourly"] |> Enum.map(fn hour -> hour["temp"] end)
       min_temp = Enum.min(temps) - 273.15
       max_temp = Enum.max(temps) - 273.15
-      create_location_weather(%{min_temp: min_temp, max_temp: max_temp, location_id: location_id, day: dt})
+
+      create_location_weather(%{
+        min_temp: min_temp,
+        max_temp: max_temp,
+        location_id: location_id,
+        day: dt
+      })
     end)
   end
 
