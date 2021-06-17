@@ -1,4 +1,5 @@
 defmodule Manatee.Locations.Location do
+  alias Manatee.Locations.LocationWeather
   use Ecto.Schema
   import Ecto.Changeset
 
@@ -12,7 +13,7 @@ defmodule Manatee.Locations.Location do
     field :zip, :string
     field :lat, :float
     field :lon, :float
-    has_many :location_weathers, LocationWeather
+    has_many :weathers, LocationWeather
 
     timestamps()
   end

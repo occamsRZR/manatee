@@ -38,6 +38,22 @@
   </li>
 
 </ul>
+<h3>
+5-Day Weather
+</h3>
+<ul>
+  <%= for weather <- @location.weathers do %>
+  <li>
+    Date: <%= weather.day %>
+  </li>
+  <li>
+    Min: <%= weather.min_temp %>
+  </li>
+  <li>
+    Max: <%= weather.max_temp %>
+  </li>
+  <% end %>
+</ul>
 
 <span><%= link "Edit", to: Routes.location_path(@conn, :edit, @location) %></span>
 <span><%= link "Back", to: Routes.location_path(@conn, :index) %></span>

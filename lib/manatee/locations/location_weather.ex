@@ -17,7 +17,7 @@ defmodule Manatee.Locations.LocationWeather do
   @doc false
   def changeset(location_weather, attrs) do
     location_weather
-    |> cast(attrs, [:min_temp, :max_temp, :humidity, :day])
+    |> cast(attrs, [:min_temp, :max_temp, :humidity, :day, :location_id])
     |> validate_required([:min_temp, :max_temp, :humidity, :day])
   end
 end
