@@ -171,8 +171,8 @@ defmodule Manatee.Locations do
       IO.inspect(ndt)
       [ok: data] = ExOwm.get_historical_weather([%{lat: 44.866889489795916, lon: -93.2793878367347, dt: ndt}]) 
       temps = data["hourly"] |> Enum.map(fn hour -> hour["temp"] end)
-      min_temp = Enum.min(temps)
-      max_temp = Enum.max(temps)
+      min_temp = Enum.min(temps) - 273.15
+      max_temp = Enum.max(temps) - 273.15
       create_location_weather(%{min_temp: min_temp, max_temp: max_temp, location_id: location_id, day: dt})
     end)
   end
