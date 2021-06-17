@@ -2,21 +2,26 @@ defmodule Manatee.Emails do
   import Bamboo.Email
   use Bamboo.Phoenix, view: ManateeWeb.EmailView
 
-  @from "test@example.com"
+  @from "noreply@manatee.valravn.us"
 
   def welcome_email(%{email: email}) do
     base_email()
     |> subject("Welcome!")
     |> to(email)
-    |> render("welcome.html", title: "Thank you for signing up", preheader: "Thank you for signing up to the app.")
+    |> render("welcome.html",
+      title: "Thank you for signing up",
+      preheader: "Thank you for signing up to the app."
+    )
     |> premail()
   end
 
   defp base_email do
     new_email()
     |> from(@from)
-    |> put_html_layout({ManateeWeb.LayoutView, "email.html"}) # Set default layout
-    |> put_text_layout({ManateeWeb.LayoutView, "email.text"}) # Set default text layout
+    # Set default layout
+    |> put_html_layout({ManateeWeb.LayoutView, "email.html"})
+    # Set default text layout
+    |> put_text_layout({ManateeWeb.LayoutView, "email.text"})
   end
 
   defp premail(email) do
