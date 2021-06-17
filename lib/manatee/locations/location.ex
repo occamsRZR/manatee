@@ -1,6 +1,8 @@
 defmodule Manatee.Locations.Location do
+  alias Manatee.Locations.LocationWeather
   use Ecto.Schema
   import Ecto.Changeset
+  alias Manatee.Locations.LocationWeather
 
   @primary_key {:id, :binary_id, autogenerate: true}
   @foreign_key_type :binary_id
@@ -12,6 +14,7 @@ defmodule Manatee.Locations.Location do
     field :zip, :string
     field :lat, :float
     field :lon, :float
+    has_many :weathers, LocationWeather
 
     timestamps()
   end
