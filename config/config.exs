@@ -60,7 +60,7 @@ config :kaffy,
 
 config :manatee, Oban,
   repo: Manatee.Repo,
-  queues: [default: 1, mailers: 2, events: 1, low: 1],
+  queues: [default: 1],
   plugins: [
     Oban.Plugins.Pruner,
     {Oban.Plugins.Cron,
