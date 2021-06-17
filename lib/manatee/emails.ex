@@ -2,7 +2,7 @@ defmodule Manatee.Emails do
   import Bamboo.Email
   use Bamboo.Phoenix, view: ManateeWeb.EmailView
 
-  @from "noreply@manatee.valravn.us"
+  @from "brandon.fulk@gmail.com"
 
   def welcome_email(%{email: email, url: url}) do
     base_email()
