@@ -25,6 +25,14 @@
   <%= text_input f, :zip %>
   <%= error_tag f, :zip %>
 
+  <%= label f, :lat %>
+  <%= text_input f, :lat %>
+  <%= error_tag f, :lat %>
+
+  <%= label f, :lon %>
+  <%= text_input f, :lon %>
+  <%= error_tag f, :lon %>
+
   <div>
     <%= submit "Save" %>
   </div>
