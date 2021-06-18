@@ -5,33 +5,47 @@
     </div>
   <% end %>
 
+<div class="container mx-auto px-4 py-3">
   <%= label f, :name %>
-  <%= text_input f, :name %>
+  <%= text_input f, :name, class: "form-input px-4 py-3 rounded-full"%>
   <%= error_tag f, :name %>
+</div>
 
+<div class="container mx-auto px-4 py-3">
   <%= label f, :address %>
-  <%= text_input f, :address %>
+  <%= text_input f, :address, class: "form-input px-4 py-3 rounded-full" %>
   <%= error_tag f, :address %>
+</div>
 
+<div class="container mx-auto px-4 py-3">
   <%= label f, :city %>
-  <%= text_input f, :city %>
+  <%= text_input f, :city, class: "form-input px-4 py-3 rounded-full" %>
   <%= error_tag f, :city %>
+</div>
 
+<div class="container mx-auto px-4 py-3">
   <%= label f, :state %>
-  <%= text_input f, :state %>
+  <%= text_input f, :state, class: "form-input px-4 py-3 rounded-full" %>
   <%= error_tag f, :state %>
+</div>
 
+<div class="container mx-auto px-4 py-3">
   <%= label f, :zip %>
-  <%= text_input f, :zip %>
+  <%= text_input f, :zip, class: "form-input px-4 py-3 rounded-full" %>
   <%= error_tag f, :zip %>
+</div>
 
+<div class="container mx-auto px-4 py-3">
   <%= label f, :lat %>
-  <%= text_input f, :lat %>
+  <%= text_input f, :lat, class: "form-input px-4 py-3 rounded-full" %>
   <%= error_tag f, :lat %>
+</div>
 
+<div class="container mx-auto px-4 py-3">
   <%= label f, :lon %>
-  <%= text_input f, :lon %>
+  <%= text_input f, :lon, class: "form-input px-4 py-3 rounded-full" %>
   <%= error_tag f, :lon %>
+</div>
 
   <div>
     <%= submit "Save" %>
