@@ -62,11 +62,11 @@ config :manatee, Oban,
   repo: Manatee.Repo,
   queues: [default: 1],
   plugins: [
-    Oban.Plugins.Pruner
-    # {Oban.Plugins.Cron,
-    #  crontab: [
-    #    {"0 6 * * *", Manatee.Workers.HistoricalWeatherWorker}
-    #  ]}
+    Oban.Plugins.Pruner,
+    {Oban.Plugins.Cron,
+     crontab: [
+       {"0 6 * * *", Manatee.Workers.HistoricalWeatherWorker}
+     ]}
   ]
 
 # Import environment specific config. This must remain at the bottom
