@@ -154,12 +154,15 @@ defmodule Manatee.Locations do
   end
 
   @doc """
-  Backfills a location's weather for the past 5 days (limit on OWM)
+  Backfills a location's weather for the past number of days (limit on OWM)
   """
-  def backfill_location_weather(location_id) do
+  def backfill_location_weather(location_id, number_of_days) do
     location = get_location!(location_id)
 
-    Interval.new(from: Date.utc_today() |> Date.add(-5), until: [days: 5])
+    Interval.new(
+      from: Date.utc_today() |> Date.add(-number_of_days),
+      until: [days: number_of_days]
+    )
     |> Interval.with_step(days: 1)
     |> Enum.map(fn dt ->
       unix_dt = Timex.to_datetime(dt) |> DateTime.to_unix()
