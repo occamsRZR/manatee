@@ -38,22 +38,36 @@
   </li>
 
 </ul>
+
+<ul>
+
+</ul>
 <h3>
 5-Day Weather
 </h3>
-<ul>
-  <%= for weather <- @location.weathers do %>
-  <li>
-    Date: <%= weather.day %>
-  </li>
-  <li>
-    Min: <%= weather.min_temp %>
-  </li>
-  <li>
-    Max: <%= weather.max_temp %>
-  </li>
-  <% end %>
-</ul>
+<table style="width:100%">
+  <tr>
+    <th>Date</th>
+    <th>Min Temp(C)</th>
+    <th>Max Temp(C)</th>
+    <th>Min Temp(F)</th>
+    <th>Max Temp(F)</th>
+    <th>GDD(Base 0C)</th>
+    <th>GCC(Base 10C)</th>
+  </tr>
+
+    <%= for weather <- @location.weathers do %>
+    <tr>
+    <td><%= weather.day %></td>
+    <td><%= weather.min_temp |> format_temp %></td>
+    <td><%= weather.max_temp |> format_temp %></td>
+    <td><%= weather.min_temp |> c_to_f |> format_temp %></td>
+    <td><%= weather.max_temp |> c_to_f |> format_temp %></td>
+    <td><%= gdd(weather.min_temp, weather.max_temp, 0) |> format_temp %></td>
+    <td><%= gdd(weather.min_temp, weather.max_temp, 10) |> format_temp %></td>
+    </tr>
+    <% end %>
+</table>
 
 <span><%= link "Edit", to: Routes.location_path(@conn, :edit, @location) %></span>
 <span><%= link "Back", to: Routes.location_path(@conn, :index) %></span>
