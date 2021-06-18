@@ -1,11 +1,13 @@
-    ==============================
+<p>
+ Hi <%= @email %>,
+</p>
 
-    Hi #{@email},
+<p>
+You can confirm your account by visiting the URL below:
+</p>
 
-    You can confirm your account by visiting the URL below:
+<%= @url %>
 
-    #{@url}
-
-    If you didn't create an account with us, please ignore this.
-
-    ==============================
+<p>
+If you didn't create an account with us, please ignore this.
+</p>
