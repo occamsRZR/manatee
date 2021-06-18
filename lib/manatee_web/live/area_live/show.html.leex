@@ -1,0 +1,32 @@
+<h1>Show Area</h1>
+
+<%= if @live_action in [:edit] do %>
+  <%= live_modal @socket, ManateeWeb.AreaLive.FormComponent,
+    id: @area.id,
+    title: @page_title,
+    action: @live_action,
+    area: @area,
+    return_to: Routes.area_show_path(@socket, :show, @area) %>
+<% end %>
+
+<ul>
+
+  <li>
+    <strong>Name:</strong>
+    <%= @area.name %>
+  </li>
+
+  <li>
+    <strong>Area:</strong>
+    <%= @area.area %>
+  </li>
+
+  <li>
+    <strong>Area unit:</strong>
+    <%= @area.area_unit %>
+  </li>
+
+</ul>
+
+<span><%= live_patch "Edit", to: Routes.area_show_path(@socket, :edit, @area), class: "button" %></span>
+<span><%= live_redirect "Back", to: Routes.area_index_path(@socket, :index) %></span>

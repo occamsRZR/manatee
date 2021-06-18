@@ -1,0 +1,27 @@
+<h1>Show Application</h1>
+
+<%= if @live_action in [:edit] do %>
+  <%= live_modal @socket, ManateeWeb.ApplicationLive.FormComponent,
+    id: @application.id,
+    title: @page_title,
+    action: @live_action,
+    application: @application,
+    return_to: Routes.application_show_path(@socket, :show, @application) %>
+<% end %>
+
+<ul>
+
+  <li>
+    <strong>Description:</strong>
+    <%= @application.description %>
+  </li>
+
+  <li>
+    <strong>Applied at:</strong>
+    <%= @application.applied_at %>
+  </li>
+
+</ul>
+
+<span><%= live_patch "Edit", to: Routes.application_show_path(@socket, :edit, @application), class: "button" %></span>
+<span><%= live_redirect "Back", to: Routes.application_index_path(@socket, :index) %></span>
