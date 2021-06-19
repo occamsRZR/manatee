@@ -1,23 +1,29 @@
 defmodule ManateeWeb.AreaLive.FormComponent do
   use ManateeWeb, :live_component
 
-  alias Manatee.Areass
+  alias Manatee.Areas
+  alias Manatee.Locations
 
   @impl true
   def update(%{area: area} = assigns, socket) do
-    changeset = Areass.change_area(area)
+    changeset = Areas.change_area(area)
+
+    locations =
+      Locations.list_locations()
+      |> Enum.map(fn loc -> [key: loc.name, value: loc.id] end)
 
     {:ok,
      socket
      |> assign(assigns)
-     |> assign(:changeset, changeset)}
+     |> assign(:changeset, changeset)
+     |> assign(:locations, locations)}
   end
 
   @impl true
   def handle_event("validate", %{"area" => area_params}, socket) do
     changeset =
       socket.assigns.area
-      |> Areass.change_area(area_params)
+      |> Areas.change_area(area_params)
       |> Map.put(:action, :validate)
 
     {:noreply, assign(socket, :changeset, changeset)}
@@ -28,7 +34,7 @@ defmodule ManateeWeb.AreaLive.FormComponent do
   end
 
   defp save_area(socket, :edit, area_params) do
-    case Areass.update_area(socket.assigns.area, area_params) do
+    case Areas.update_area(socket.assigns.area, area_params) do
       {:ok, _area} ->
         {:noreply,
          socket
@@ -41,7 +47,7 @@ defmodule ManateeWeb.AreaLive.FormComponent do
   end
 
   defp save_area(socket, :new, area_params) do
-    case Areass.create_area(area_params) do
+    case Areas.create_area(area_params) do
       {:ok, _area} ->
         {:noreply,
          socket

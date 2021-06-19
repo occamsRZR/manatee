@@ -7,7 +7,8 @@ defmodule Manatee.Applications.Application do
   schema "applications" do
     field :applied_at, :utc_datetime
     field :description, :string
-    field :area_id, :binary_id
+    belongs_to :area, Manatee.Areas.Area
+    has_many :application_products, Manatee.Applications.ApplicationProduct
 
     timestamps()
   end
@@ -16,6 +17,7 @@ defmodule Manatee.Applications.Application do
   def changeset(application, attrs) do
     application
     |> cast(attrs, [:description, :applied_at])
+    |> put_assoc(:application_products, attrs[:application_products])
     |> validate_required([:description, :applied_at])
   end
 end

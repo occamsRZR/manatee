@@ -3,14 +3,14 @@ defmodule ManateeWeb.AreaLiveTest do
 
   import Phoenix.LiveViewTest
 
-  alias Manatee.Areass
+  alias Manatee.Areas
 
   @create_attrs %{area: 42, area_unit: "some area_unit", name: "some name"}
   @update_attrs %{area: 43, area_unit: "some updated area_unit", name: "some updated name"}
   @invalid_attrs %{area: nil, area_unit: nil, name: nil}
 
   defp fixture(:area) do
-    {:ok, area} = Areass.create_area(@create_attrs)
+    {:ok, area} = Areas.create_area(@create_attrs)
     area
   end
 

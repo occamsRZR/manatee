@@ -1,8 +1,8 @@
 defmodule ManateeWeb.AreaLive.Index do
   use ManateeWeb, :live_view
 
-  alias Manatee.Areass
-  alias Manatee.Areass.Area
+  alias Manatee.Areas
+  alias Manatee.Areas.Area
 
   @impl true
   def mount(_params, _session, socket) do
@@ -17,7 +17,7 @@ defmodule ManateeWeb.AreaLive.Index do
   defp apply_action(socket, :edit, %{"id" => id}) do
     socket
     |> assign(:page_title, "Edit Area")
-    |> assign(:area, Areass.get_area!(id))
+    |> assign(:area, Areas.get_area!(id))
   end
 
   defp apply_action(socket, :new, _params) do
@@ -34,13 +34,13 @@ defmodule ManateeWeb.AreaLive.Index do
 
   @impl true
   def handle_event("delete", %{"id" => id}, socket) do
-    area = Areass.get_area!(id)
-    {:ok, _} = Areass.delete_area(area)
+    area = Areas.get_area!(id)
+    {:ok, _} = Areas.delete_area(area)
 
     {:noreply, assign(socket, :areas, list_areas())}
   end
 
   defp list_areas do
-    Areass.list_areas()
+    Areas.list_areas()
   end
 end

@@ -1,12 +1,12 @@
-defmodule Manatee.Areass do
+defmodule Manatee.Areas do
   @moduledoc """
-  The Areass context.
+  The Areas context.
   """
 
   import Ecto.Query, warn: false
   alias Manatee.Repo
 
-  alias Manatee.Areass.Area
+  alias Manatee.Areas.Area
 
   @doc """
   Returns the list of areas.

@@ -35,7 +35,7 @@ defmodule Manatee.Applications do
       ** (Ecto.NoResultsError)
 
   """
-  def get_application!(id), do: Repo.get!(Application, id)
+  def get_application!(id), do: Repo.get!(Application, id) |> Repo.preload(:application_products)
 
   @doc """
   Creates a application.
@@ -99,7 +99,9 @@ defmodule Manatee.Applications do
 
   """
   def change_application(%Application{} = application, attrs \\ %{}) do
-    Application.changeset(application, attrs)
+    application
+    |> Repo.preload(:application_products)
+    |> Application.changeset(attrs)
   end
 
   alias Manatee.Applications.ApplicationProduct

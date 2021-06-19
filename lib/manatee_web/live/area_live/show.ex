@@ -1,7 +1,7 @@
 defmodule ManateeWeb.AreaLive.Show do
   use ManateeWeb, :live_view
 
-  alias Manatee.Areass
+  alias Manatee.Areas
 
   @impl true
   def mount(_params, _session, socket) do
@@ -13,7 +13,7 @@ defmodule ManateeWeb.AreaLive.Show do
     {:noreply,
      socket
      |> assign(:page_title, page_title(socket.assigns.live_action))
-     |> assign(:area, Areass.get_area!(id))}
+     |> assign(:area, Areas.get_area!(id))}
   end
 
   defp page_title(:show), do: "Show Area"

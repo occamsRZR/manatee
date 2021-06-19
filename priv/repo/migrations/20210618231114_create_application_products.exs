@@ -9,12 +9,12 @@ defmodule Manatee.Repo.Migrations.CreateApplicationProducts do
       add :interval, :integer
       add :interval_unit, :string
       add :application_id, references(:applications, on_delete: :nothing, type: :binary_id)
-      add :area_id, references(:areas, on_delete: :nothing, type: :binary_id)
+      add :product_id, references(:products, on_delete: :nothing, type: :binary_id)
 
       timestamps()
     end
 
     create index(:application_products, [:application_id])
-    create index(:application_products, [:area_id])
+    create index(:application_products, [:product_id])
   end
 end

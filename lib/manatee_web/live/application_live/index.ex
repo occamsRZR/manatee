@@ -23,7 +23,7 @@ defmodule ManateeWeb.ApplicationLive.Index do
   defp apply_action(socket, :new, _params) do
     socket
     |> assign(:page_title, "New Application")
-    |> assign(:application, %Application{})
+    |> assign(:application, %Application{application_products: []})
   end
 
   defp apply_action(socket, :index, _params) do

@@ -18,5 +18,9 @@
   <%= text_input f, :area_unit %>
   <%= error_tag f, :area_unit %>
 
+  <%= label f, :location %>
+  <%= select f, :location_id, @locations %>
+  <%= error_tag f, :location %>
+
   <%= submit "Save", phx_disable_with: "Saving..." %>
 </form>
