@@ -59,9 +59,11 @@ defmodule ManateeWeb.Router do
     live "/applications", ApplicationLive.Index, :index
     live "/applications/new", ApplicationLive.Index, :new
     live "/applications/:id/edit", ApplicationLive.Index, :edit
+    live "/applications/:id/add_products", ApplicationLive.Index, :add_products
 
     live "/applications/:id", ApplicationLive.Show, :show
     live "/applications/:id/show/edit", ApplicationLive.Show, :edit
+    live "/applications/:id/show/add_products", ApplicationLive.Show, :add_products
   end
 
   # Other scopes may use custom stacks.

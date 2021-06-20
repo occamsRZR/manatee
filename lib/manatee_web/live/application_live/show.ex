@@ -18,4 +18,5 @@ defmodule ManateeWeb.ApplicationLive.Show do
 
   defp page_title(:show), do: "Show Application"
   defp page_title(:edit), do: "Edit Application"
+  defp page_title(:add_products), do: "Add Products"
 end

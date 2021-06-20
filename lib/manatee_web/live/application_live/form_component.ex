@@ -25,8 +25,6 @@ defmodule ManateeWeb.ApplicationLive.FormComponent do
       )
       |> Map.put(:action, :validate)
 
-    require IEx
-    IEx.pry()
     {:noreply, assign(socket, :changeset, changeset)}
   end
 

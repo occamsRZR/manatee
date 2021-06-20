@@ -9,6 +9,16 @@
     return_to: Routes.application_show_path(@socket, :show, @application) %>
 <% end %>
 
+<%= if @live_action in [:add_products] do %>
+  <%= live_modal @socket, ManateeWeb.ApplicationLive.AddProductsComponent,
+    id: @application.id || :new,
+    title: @page_title,
+    action: @live_action,
+    application: @application,
+    application_product: %Manatee.Applications.ApplicationProduct{application_id: @application.id},
+    return_to: Routes.application_show_path(@socket, :show, @application) %>
+<% end %>
+
 <ul>
 
   <li>
@@ -23,5 +33,19 @@
 
 </ul>
 
+<h3> Products Applied: </h3>
+  <ul>
+    <%= for application_product <- @application.application_products do %>
+    <li>
+      <strong>Interval:</strong>
+      <%= application_product.interval %>
+      <%= application_product.interval_unit %>
+      <strong>Rate:</strong>
+      <%= application_product.rate %>
+      <%= application_product.rate_unit %>
+    </li>
+    <% end %>
+  </ul>
 <span><%= live_patch "Edit", to: Routes.application_show_path(@socket, :edit, @application), class: "button" %></span>
+<span><%= live_patch "Add Products", to: Routes.application_show_path(@socket, :add_products, @application), class: "button" %></span>
 <span><%= live_redirect "Back", to: Routes.application_index_path(@socket, :index) %></span>

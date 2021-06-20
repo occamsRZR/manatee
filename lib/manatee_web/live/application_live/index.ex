@@ -3,6 +3,7 @@ defmodule ManateeWeb.ApplicationLive.Index do
 
   alias Manatee.Applications
   alias Manatee.Applications.Application
+  alias Manatee.Applications.ApplicationProduct
 
   @impl true
   def mount(_params, _session, socket) do
@@ -18,6 +19,13 @@ defmodule ManateeWeb.ApplicationLive.Index do
     socket
     |> assign(:page_title, "Edit Application")
     |> assign(:application, Applications.get_application!(id))
+  end
+
+  defp apply_action(socket, :add_products, %{"id" => id}) do
+    socket
+    |> assign(:page_title, "Application Products")
+    |> assign(:application, Applications.get_application!(id))
+    |> assign(:application_product, %ApplicationProduct{application_id: id})
   end
 
   defp apply_action(socket, :new, _params) do
