@@ -16,6 +16,7 @@
     action: @live_action,
     application: @application,
     application_product: %Manatee.Applications.ApplicationProduct{application_id: @application.id},
+    products: @products,
     return_to: Routes.application_index_path(@socket, :index) %>
 <% end %>
 

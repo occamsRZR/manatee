@@ -16,6 +16,7 @@
     action: @live_action,
     application: @application,
     application_product: %Manatee.Applications.ApplicationProduct{application_id: @application.id},
+    products: @products,
     return_to: Routes.application_show_path(@socket, :show, @application) %>
 <% end %>
 
@@ -37,6 +38,9 @@
   <ul>
     <%= for application_product <- @application.application_products do %>
     <li>
+      <strong>Product:</strong>
+      <%= application_product.product_id %>
+      <%= application_product.product_id %>
       <strong>Interval:</strong>
       <%= application_product.interval %>
       <%= application_product.interval_unit %>

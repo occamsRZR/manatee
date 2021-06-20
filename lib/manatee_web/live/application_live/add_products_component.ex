@@ -11,10 +11,11 @@ defmodule ManateeWeb.ApplicationLive.AddProductsComponent do
         socket
       ) do
     changeset = Applications.change_application(application)
-    IO.inspect(assigns)
 
     application_product_changeset =
       Applications.change_application_product(%ApplicationProduct{application_id: application.id})
+
+    IO.inspect(assigns)
 
     {:ok,
      socket
@@ -49,6 +50,9 @@ defmodule ManateeWeb.ApplicationLive.AddProductsComponent do
     phx_change: "validate",
     phx_submit: "save" %>
 
+    <%= label f, :product %>
+    <%= select f, :product_id, @products %>
+    <%= error_tag f, :product %>
 
     <%= label f, :rate %>
     <%= text_input f, :rate %>

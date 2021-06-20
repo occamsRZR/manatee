@@ -2,6 +2,7 @@ defmodule ManateeWeb.ApplicationLive.Show do
   use ManateeWeb, :live_view
 
   alias Manatee.Applications
+  alias Manatee.Products
 
   @impl true
   def mount(_params, _session, socket) do
@@ -13,7 +14,11 @@ defmodule ManateeWeb.ApplicationLive.Show do
     {:noreply,
      socket
      |> assign(:page_title, page_title(socket.assigns.live_action))
-     |> assign(:application, Applications.get_application!(id))}
+     |> assign(:application, Applications.get_application!(id))
+     |> assign(
+       :products,
+       Products.list_products() |> Enum.map(fn prod -> [key: prod.name, value: prod.id] end)
+     )}
   end
 
   defp page_title(:show), do: "Show Application"

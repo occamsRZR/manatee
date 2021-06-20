@@ -4,10 +4,16 @@ defmodule ManateeWeb.ApplicationLive.Index do
   alias Manatee.Applications
   alias Manatee.Applications.Application
   alias Manatee.Applications.ApplicationProduct
+  alias Manatee.Products
 
   @impl true
   def mount(_params, _session, socket) do
-    {:ok, assign(socket, :applications, list_applications())}
+    {:ok,
+     assign(socket, :applications, list_applications())
+     |> assign(
+       :products,
+       Products.list_products() |> Enum.map(fn prod -> [key: prod.name, value: prod.id] end)
+     )}
   end
 
   @impl true
@@ -26,6 +32,10 @@ defmodule ManateeWeb.ApplicationLive.Index do
     |> assign(:page_title, "Application Products")
     |> assign(:application, Applications.get_application!(id))
     |> assign(:application_product, %ApplicationProduct{application_id: id})
+    |> assign(
+      :products,
+      Products.list_products() |> Enum.map(fn prod -> [key: prod.name, value: prod.id] end)
+    )
   end
 
   defp apply_action(socket, :new, _params) do
