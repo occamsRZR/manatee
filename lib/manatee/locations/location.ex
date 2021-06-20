@@ -15,6 +15,7 @@ defmodule Manatee.Locations.Location do
     field :lat, :float
     field :lon, :float
     has_many :weathers, LocationWeather
+    belongs_to :user, Manatee.Accounts.User, type: :integer
 
     timestamps()
   end
@@ -22,8 +23,8 @@ defmodule Manatee.Locations.Location do
   @doc false
   def changeset(location, attrs) do
     location
-    |> cast(attrs, [:name, :address, :city, :state, :zip, :lat, :lon])
-    |> validate_required([:name, :address, :city, :state, :zip])
+    |> cast(attrs, [:name, :address, :city, :state, :zip, :lat, :lon, :user_id])
+    |> validate_required([:name, :address, :city, :state, :zip, :user_id])
     |> geocode(location)
   end
 

@@ -10,6 +10,7 @@ defmodule Manatee.Accounts.User do
     field :hashed_password, :string
     field :confirmed_at, :naive_datetime
     field :avatar, Manatee.AvatarUploader.Type
+    has_many :locations, Manatee.Locations.Location
 
     timestamps()
   end
