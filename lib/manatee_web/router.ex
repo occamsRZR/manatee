@@ -38,8 +38,12 @@ defmodule ManateeWeb.Router do
 
   scope "/", ManateeWeb do
     pipe_through :browser
-
     live "/", PageLive, :index
+  end
+
+  scope "/", ManateeWeb do
+    pipe_through [:browser, :require_authenticated_user]
+
     resources "/locations", LocationController
 
     live "/products", ProductLive.Index, :index

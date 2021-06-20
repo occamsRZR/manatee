@@ -46,6 +46,7 @@
   <%= text_input f, :lon, class: "form-input px-4 py-3 rounded-full" %>
   <%= error_tag f, :lon %>
 </div>
+  <%= hidden_input f, :user_id, value: @current_user.id %>
 
   <div>
     <%= submit "Save" %>

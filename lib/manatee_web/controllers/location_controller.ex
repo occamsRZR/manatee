@@ -3,15 +3,23 @@ defmodule ManateeWeb.LocationController do
 
   alias Manatee.Locations
   alias Manatee.Locations.Location
+  alias Manatee.Accounts.User
 
   def index(conn, _params) do
-    locations = Locations.list_locations()
-    render(conn, "index.html", locations: locations)
+    case conn.assigns.current_user do
+      %User{} = current_user ->
+        locations = Locations.by_user_id(current_user.id)
+        render(conn, "index.html", locations: locations)
+
+      nil ->
+        locations = []
+        render(conn, "index.html", locations: locations)
+    end
   end
 
   def new(conn, _params) do
     changeset = Locations.change_location(%Location{address: "", state: "", city: "", zip: ""})
-    render(conn, "new.html", changeset: changeset)
+    render(conn, "new.html", changeset: changeset, current_user: conn.assigns.current_user)
   end
 
   def create(conn, %{"location" => location_params}) do

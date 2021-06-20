@@ -1,4 +1,6 @@
 defmodule Manatee.Locations do
+  import Ecto.Query, only: [from: 2]
+
   @moduledoc """
   The Locations context.
   """
@@ -21,6 +23,14 @@ defmodule Manatee.Locations do
   """
   def list_locations do
     Repo.all(Location)
+  end
+
+  def by_user_id(user_id) do
+    from(
+      Location,
+      where: [user_id: ^user_id]
+    )
+    |> Repo.all()
   end
 
   @doc """
