@@ -9,7 +9,7 @@ defmodule Manatee.Areas do
   alias Manatee.Repo
 
   alias Manatee.Areas.Area
-  alias Manatee.Locations.Location
+  alias Manatee.Locations
 
   @doc """
   Returns the list of areas.
@@ -25,9 +25,11 @@ defmodule Manatee.Areas do
   end
 
   def by_user_id(user_id) do
+    location_ids = Locations.by_user_id(user_id) |> Enum.map(fn loc -> loc.id end)
+
     from(
-      Location,
-      where: [user_id: ^user_id]
+      a in Area,
+      where: a.location_id in ^location_ids
     )
     |> Repo.all()
   end
