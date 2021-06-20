@@ -15,7 +15,7 @@
       <th>Name</th>
       <th>Area</th>
       <th>Area unit</th>
-
+      <th>Location</th>
       <th></th>
     </tr>
   </thead>
@@ -25,6 +25,8 @@
         <td><%= area.name %></td>
         <td><%= area.area %></td>
         <td><%= area.area_unit %></td>
+        <td><%= area.location.name %></td>
+
 
         <td>
           <span><%= live_redirect "Show", to: Routes.area_show_path(@socket, :show, area) %></span>

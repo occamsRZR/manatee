@@ -41,6 +41,6 @@ defmodule ManateeWeb.AreaLive.Index do
   end
 
   defp list_areas do
-    Areas.list_areas()
+    Areas.list_areas() |> Manatee.Repo.preload(:location)
   end
 end

@@ -1,4 +1,6 @@
 defmodule Manatee.Areas do
+  import Ecto.Query, only: [from: 2]
+
   @moduledoc """
   The Areas context.
   """
@@ -7,6 +9,7 @@ defmodule Manatee.Areas do
   alias Manatee.Repo
 
   alias Manatee.Areas.Area
+  alias Manatee.Locations.Location
 
   @doc """
   Returns the list of areas.
@@ -19,6 +22,14 @@ defmodule Manatee.Areas do
   """
   def list_areas do
     Repo.all(Area)
+  end
+
+  def by_user_id(user_id) do
+    from(
+      Location,
+      where: [user_id: ^user_id]
+    )
+    |> Repo.all()
   end
 
   @doc """
