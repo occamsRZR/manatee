@@ -33,6 +33,7 @@ defmodule ManateeWeb.Router do
     pipe_through :graphql
 
     forward "/", Absinthe.Plug, schema: ManateeWeb.Schema
+    resources "/application_products", ApplicationProductController, except: [:new, :edit]
   end
 
   scope "/", ManateeWeb do
@@ -47,6 +48,22 @@ defmodule ManateeWeb.Router do
 
     live "/products/:id", ProductLive.Show, :show
     live "/products/:id/show/edit", ProductLive.Show, :edit
+
+    live "/areas", AreaLive.Index, :index
+    live "/areas/new", AreaLive.Index, :new
+    live "/areas/:id/edit", AreaLive.Index, :edit
+
+    live "/areas/:id", AreaLive.Show, :show
+    live "/areas/:id/show/edit", AreaLive.Show, :edit
+
+    live "/applications", ApplicationLive.Index, :index
+    live "/applications/new", ApplicationLive.Index, :new
+    live "/applications/:id/edit", ApplicationLive.Index, :edit
+    live "/applications/:id/add_products", ApplicationLive.Index, :add_products
+
+    live "/applications/:id", ApplicationLive.Show, :show
+    live "/applications/:id/show/edit", ApplicationLive.Show, :edit
+    live "/applications/:id/show/add_products", ApplicationLive.Show, :add_products
   end
 
   # Other scopes may use custom stacks.

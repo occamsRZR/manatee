@@ -1,0 +1,49 @@
+<h1>Listing Applications</h1>
+
+<%= if @live_action in [:new, :edit] do %>
+  <%= live_modal @socket, ManateeWeb.ApplicationLive.FormComponent,
+    id: @application.id || :new,
+    title: @page_title,
+    action: @live_action,
+    application: @application,
+    return_to: Routes.application_index_path(@socket, :index) %>
+<% end %>
+
+<%= if @live_action in [:add_products] do %>
+  <%= live_modal @socket, ManateeWeb.ApplicationLive.AddProductsComponent,
+    id: @application.id || :new,
+    title: @page_title,
+    action: @live_action,
+    application: @application,
+    application_product: %Manatee.Applications.ApplicationProduct{application_id: @application.id},
+    products: @products,
+    return_to: Routes.application_index_path(@socket, :index) %>
+<% end %>
+
+<table>
+  <thead>
+    <tr>
+      <th>Description</th>
+      <th>Applied at</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody id="applications">
+    <%= for application <- @applications do %>
+      <tr id="application-<%= application.id %>">
+        <td><%= application.description %></td>
+        <td><%= application.applied_at %></td>
+
+        <td>
+          <span><%= live_redirect "Show", to: Routes.application_show_path(@socket, :show, application) %></span>
+          <span><%= live_patch "Edit", to: Routes.application_index_path(@socket, :edit, application) %></span>
+          <span><%= live_patch "Add Products", to: Routes.application_index_path(@socket, :add_products, application) %></span>
+          <span><%= link "Delete", to: "#", phx_click: "delete", phx_value_id: application.id, data: [confirm: "Are you sure?"] %></span>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<span><%= live_patch "New Application", to: Routes.application_index_path(@socket, :new) %></span>

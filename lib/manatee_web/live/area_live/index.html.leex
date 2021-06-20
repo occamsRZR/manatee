@@ -1,0 +1,39 @@
+<h1>Listing Areas</h1>
+
+<%= if @live_action in [:new, :edit] do %>
+  <%= live_modal @socket, ManateeWeb.AreaLive.FormComponent,
+    id: @area.id || :new,
+    title: @page_title,
+    action: @live_action,
+    area: @area,
+    return_to: Routes.area_index_path(@socket, :index) %>
+<% end %>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Area</th>
+      <th>Area unit</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody id="areas">
+    <%= for area <- @areas do %>
+      <tr id="area-<%= area.id %>">
+        <td><%= area.name %></td>
+        <td><%= area.area %></td>
+        <td><%= area.area_unit %></td>
+
+        <td>
+          <span><%= live_redirect "Show", to: Routes.area_show_path(@socket, :show, area) %></span>
+          <span><%= live_patch "Edit", to: Routes.area_index_path(@socket, :edit, area) %></span>
+          <span><%= link "Delete", to: "#", phx_click: "delete", phx_value_id: area.id, data: [confirm: "Are you sure?"] %></span>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<span><%= live_patch "New Area", to: Routes.area_index_path(@socket, :new) %></span>

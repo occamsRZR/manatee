@@ -1,0 +1,55 @@
+<h1>Show Application</h1>
+
+<%= if @live_action in [:edit] do %>
+  <%= live_modal @socket, ManateeWeb.ApplicationLive.FormComponent,
+    id: @application.id,
+    title: @page_title,
+    action: @live_action,
+    application: @application,
+    return_to: Routes.application_show_path(@socket, :show, @application) %>
+<% end %>
+
+<%= if @live_action in [:add_products] do %>
+  <%= live_modal @socket, ManateeWeb.ApplicationLive.AddProductsComponent,
+    id: @application.id || :new,
+    title: @page_title,
+    action: @live_action,
+    application: @application,
+    application_product: %Manatee.Applications.ApplicationProduct{application_id: @application.id},
+    products: @products,
+    return_to: Routes.application_show_path(@socket, :show, @application) %>
+<% end %>
+
+<ul>
+
+  <li>
+    <strong>Description:</strong>
+    <%= @application.description %>
+  </li>
+
+  <li>
+    <strong>Applied at:</strong>
+    <%= @application.applied_at %>
+  </li>
+
+</ul>
+
+<h3> Products Applied: </h3>
+  <ul>
+    <%= for application_product <- @application.application_products do %>
+    <li>
+      <strong>Product:</strong>
+      <%= application_product.product_id %>
+      <%= application_product.product_id %>
+      <strong>Interval:</strong>
+      <%= application_product.interval %>
+      <%= application_product.interval_unit %>
+      <strong>Rate:</strong>
+      <%= application_product.rate %>
+      <%= application_product.rate_unit %>
+    </li>
+    <% end %>
+  </ul>
+<span><%= live_patch "Edit", to: Routes.application_show_path(@socket, :edit, @application), class: "button" %></span>
+<span><%= live_patch "Add Products", to: Routes.application_show_path(@socket, :add_products, @application), class: "button" %></span>
+<span><%= live_redirect "Back", to: Routes.application_index_path(@socket, :index) %></span>
