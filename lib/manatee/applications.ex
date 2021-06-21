@@ -2,11 +2,12 @@ defmodule Manatee.Applications do
   @moduledoc """
   The Applications context.
   """
-
+  import Ecto.Query, only: [from: 2]
   import Ecto.Query, warn: false
   alias Manatee.Repo
 
   alias Manatee.Applications.Application
+  alias Manatee.Locations
 
   @doc """
   Returns the list of applications.
@@ -19,6 +20,16 @@ defmodule Manatee.Applications do
   """
   def list_applications do
     Repo.all(Application)
+  end
+
+  def by_user_id(user_id) do
+    location_ids = Locations.by_user_id(user_id) |> Enum.map(fn loc -> loc.id end)
+
+#    from(
+#      a in Application, ar in Area,
+#      where: ar.location_id in ^location_ids
+#    )
+#    |> Repo.all()
   end
 
   @doc """
@@ -103,6 +114,15 @@ defmodule Manatee.Applications do
     application
     |> Repo.preload(application_products: :product)
     |> Application.changeset(attrs)
+  end
+
+  def gdd_since_application(%Application{} = application) do
+    application
+    |> Repo.preload(area: [location: :weathers])
+    |> Map.get(:area)
+    |> Map.get(:location)
+    |> Map.get(:weathers)
+    |> IO.inspect
   end
 
   alias Manatee.Applications.ApplicationProduct

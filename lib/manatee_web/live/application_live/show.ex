@@ -18,15 +18,16 @@ defmodule ManateeWeb.ApplicationLive.Show do
   end
 
   @impl true
-  def handle_params(%{"id" => id}, session, socket) do
+  def handle_params(%{"id" => id}, _, socket) do
     current_user = socket.assigns.current_user
     areas = Areas.by_user_id(current_user.id) |> Enum.map(fn area -> [key: area.name, value: area.id] end)
-
+    application = Applications.get_application!(id)
+    gdd_since = Applications.gdd_since_application(application)
     {:noreply,
      socket
      |> assign(:areas, areas)
+     |> assign(:application, application)
      |> assign(:page_title, page_title(socket.assigns.live_action))
-     |> assign(:application, Applications.get_application!(id))
      |> assign(
        :products,
        Products.list_products() |> Enum.map(fn prod -> [key: prod.name, value: prod.id] end)
