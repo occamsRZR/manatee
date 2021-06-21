@@ -1,5 +1,8 @@
-<h1>Listing Applications</h1>
-
+<div class="container mx-auto px-5 py-5">
+  <div class="pt-44 text-base font-bold">
+    <b>Listing Applications</b>
+  </div>
+</div>
 <%= if @live_action in [:new, :edit] do %>
   <%= live_modal @socket, ManateeWeb.ApplicationLive.FormComponent,
     id: @application.id || :new,
@@ -20,7 +23,7 @@
     return_to: Routes.application_index_path(@socket, :index) %>
 <% end %>
 
-<table>
+<table class="table-auto">
   <thead>
     <tr>
       <th>Description</th>
