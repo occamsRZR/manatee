@@ -1,15 +1,19 @@
 defmodule ManateeWeb.ApplicationLive.Index do
   use ManateeWeb, :live_view
 
+  alias Manatee.Areas
   alias Manatee.Applications
   alias Manatee.Applications.Application
   alias Manatee.Applications.ApplicationProduct
   alias Manatee.Products
 
   @impl true
-  def mount(_params, _session, socket) do
+  def mount(_params, session, socket) do
+    current_user = ManateeWeb.Live.AuthHelper.load_user!(session)
+    areas = Areas.by_user_id(current_user.id) |> Enum.map(fn area -> [key: area.name, value: area.id] end)
     {:ok,
-     assign(socket, :applications, list_applications())
+     assign(socket, :applications, list_applications(current_user.id))
+     |> assign(:areas, areas)
      |> assign(
        :products,
        Products.list_products() |> Enum.map(fn prod -> [key: prod.name, value: prod.id] end)
@@ -55,10 +59,10 @@ defmodule ManateeWeb.ApplicationLive.Index do
     application = Applications.get_application!(id)
     {:ok, _} = Applications.delete_application(application)
 
-    {:noreply, assign(socket, :applications, list_applications())}
+    {:noreply, assign(socket, :applications, list_applications(socket.assigns.current_user.id))}
   end
 
-  defp list_applications do
-    Applications.list_applications()
+  defp list_applications(user_id) do
+    Applications.list_applications() |> Manatee.Repo.preload(:area)
   end
 end

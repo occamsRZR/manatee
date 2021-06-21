@@ -4,7 +4,8 @@
   <%= live_modal @socket, ManateeWeb.ApplicationLive.FormComponent,
     id: @application.id,
     title: @page_title,
-    action: @live_action,
+      action: @live_action,
+      areas: @areas,
     application: @application,
     return_to: Routes.application_show_path(@socket, :show, @application) %>
 <% end %>

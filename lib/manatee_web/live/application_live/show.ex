@@ -3,16 +3,28 @@ defmodule ManateeWeb.ApplicationLive.Show do
 
   alias Manatee.Applications
   alias Manatee.Products
+  alias Manatee.Areas
 
   @impl true
-  def mount(_params, _session, socket) do
+  def mount(_params, session, socket) do
+    current_user = ManateeWeb.Live.AuthHelper.load_user!(session)
+    socket = assign(socket, :current_user, current_user)
+    {:ok,
+     assign(socket,
+       :products,
+       Products.list_products() |> Enum.map(fn prod -> [key: prod.name, value: prod.id] end)
+     )}
     {:ok, socket}
   end
 
   @impl true
-  def handle_params(%{"id" => id}, _, socket) do
+  def handle_params(%{"id" => id}, session, socket) do
+    current_user = socket.assigns.current_user
+    areas = Areas.by_user_id(current_user.id) |> Enum.map(fn area -> [key: area.name, value: area.id] end)
+
     {:noreply,
      socket
+     |> assign(:areas, areas)
      |> assign(:page_title, page_title(socket.assigns.live_action))
      |> assign(:application, Applications.get_application!(id))
      |> assign(
@@ -24,4 +36,5 @@ defmodule ManateeWeb.ApplicationLive.Show do
   defp page_title(:show), do: "Show Application"
   defp page_title(:edit), do: "Edit Application"
   defp page_title(:add_products), do: "Add Products"
+
 end

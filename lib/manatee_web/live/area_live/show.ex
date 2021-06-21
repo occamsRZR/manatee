@@ -5,10 +5,12 @@ defmodule ManateeWeb.AreaLive.Show do
 
   @impl true
   def mount(_params, session, socket) do
+    current_user = ManateeWeb.Live.AuthHelper.load_user!(session)
+    areas = Areas.by_user_id(current_user.id) |> Enum.map(fn area -> [key: area.name, value: area.id] end)
+
     {:ok,
-     assign_new(socket, :current_user, fn ->
-       ManateeWeb.Live.AuthHelper.load_user!(session)
-     end)}
+     assign(socket, :current_user, current_user)
+     |> assign(:areas, areas)}
   end
 
   @impl true

@@ -6,13 +6,18 @@
   phx_change: "validate",
   phx_submit: "save" %>
 
-  <%= label f, :description %>
+  <%= label f, :description %>for
   <%= text_input f, :description %>
   <%= error_tag f, :description %>
 
   <%= label f, :applied_at %>
   <%= datetime_select f, :applied_at %>
   <%= error_tag f, :applied_at %>
+
+  <%= label f, :area %>
+  <%= select f, :area_id, @areas %>
+  <%= error_tag f, :area %>
+
 
   <%= submit "Save", phx_disable_with: "Saving..." %>
 </form>

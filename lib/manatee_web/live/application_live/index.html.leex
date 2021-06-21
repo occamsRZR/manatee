@@ -9,6 +9,7 @@
     title: @page_title,
     action: @live_action,
     application: @application,
+    areas: @areas,
     return_to: Routes.application_index_path(@socket, :index) %>
 <% end %>
 
@@ -28,6 +29,7 @@
     <tr>
       <th>Description</th>
       <th>Applied at</th>
+      <th>Area</th>
 
       <th></th>
     </tr>
@@ -37,6 +39,7 @@
       <tr id="application-<%= application.id %>">
         <td><%= application.description %></td>
         <td><%= application.applied_at %></td>
+        <td><%= application.area.name %></td>
 
         <td>
           <span><%= live_redirect "Show", to: Routes.application_show_path(@socket, :show, application) %></span>
