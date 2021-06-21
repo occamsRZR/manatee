@@ -17,7 +17,6 @@ defmodule Manatee.Applications.Application do
   def changeset(application, attrs) do
     application
     |> cast(attrs, [:description, :applied_at])
-    |> put_assoc(:application_products, attrs[:application_products])
     |> validate_required([:description, :applied_at])
   end
 end

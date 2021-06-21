@@ -14,32 +14,5 @@
   <%= datetime_select f, :applied_at %>
   <%= error_tag f, :applied_at %>
 
-    <%= inputs_for f, :application_products, fn p -> %>
-    <div class="form-group">
-      <%= label p, :rate, class: "control-label" %>
-      <%= text_input p, :rate, class: "form-control" %>
-      <%= error_tag p, :rate %>
-    </div>
-
-    <div class="form-group">
-      <%= label p, :rate_unit, class: "control-label" %>
-      <%= text_input p, :rate_unit, class: "form-control" %>
-      <%= error_tag p, :rate_unit %>
-    </div>
-
-    <div class="form-group">
-      <%= label p, :interval_unit, class: "control-label" %>
-      <%= text_input p, :interval_unit, class: "form-control" %>
-      <%= error_tag p, :interval_unit %>
-    </div>
-
-    <div class="form-group">
-      <%= label p, :interval_unit, class: "control-label" %>
-      <%= text_input p, :interval_unit, class: "form-control" %>
-      <%= error_tag p, :interval_unit %>
-    </div>
-  <% end %>
-  <a href="#" phx-target=<%= @myself %> phx-click="add-product">Add a product</a>
-
   <%= submit "Save", phx_disable_with: "Saving..." %>
 </form>
