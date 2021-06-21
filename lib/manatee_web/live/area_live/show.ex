@@ -4,8 +4,11 @@ defmodule ManateeWeb.AreaLive.Show do
   alias Manatee.Areas
 
   @impl true
-  def mount(_params, _session, socket) do
-    {:ok, socket}
+  def mount(_params, session, socket) do
+    {:ok,
+     assign_new(socket, :current_user, fn ->
+       ManateeWeb.Live.AuthHelper.load_user!(session)
+     end)}
   end
 
   @impl true

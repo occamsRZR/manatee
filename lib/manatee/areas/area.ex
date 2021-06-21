@@ -18,7 +18,7 @@ defmodule Manatee.Areas.Area do
   @doc false
   def changeset(area, attrs) do
     area
-    |> cast(attrs, [:name, :area, :area_unit])
-    |> validate_required([:name, :area, :area_unit])
+    |> cast(attrs, [:name, :area, :area_unit, :location_id])
+    |> validate_required([:name, :area, :area_unit, :location_id])
   end
 end

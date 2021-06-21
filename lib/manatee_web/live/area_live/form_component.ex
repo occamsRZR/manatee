@@ -5,11 +5,11 @@ defmodule ManateeWeb.AreaLive.FormComponent do
   alias Manatee.Locations
 
   @impl true
-  def update(%{area: area} = assigns, socket) do
+  def update(%{area: area, user_id: user_id} = assigns, socket) do
     changeset = Areas.change_area(area)
 
     locations =
-      Locations.list_locations()
+      Locations.by_user_id(user_id)
       |> Enum.map(fn loc -> [key: loc.name, value: loc.id] end)
 
     {:ok,
