@@ -1,8 +1,10 @@
+@import "./phoenix.css";
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @import "../node_modules/nprogress/nprogress.css";
+
 
 /* For Phoenix Live reload script */
 [hidden] {
