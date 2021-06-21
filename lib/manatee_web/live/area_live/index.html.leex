@@ -5,14 +5,11 @@
     id: @area.id || :new,
     title: @page_title,
     action: @live_action,
+    user_id: @current_user.id,
     area: @area,
     return_to: Routes.area_index_path(@socket, :index) %>
 <% end %>
-<div>
-<%= if @current_user do %>
-  <%= @current_user.email %>
-<% end %>
-</div>
+
 <table>
   <thead>
     <tr>

@@ -12,7 +12,7 @@ defmodule ManateeWeb.Router do
     plug :put_root_layout, {ManateeWeb.LayoutView, :root}
     plug :protect_from_forgery
     plug :put_secure_browser_headers
-    # plug :fetch_current_user
+    plug :fetch_current_user
   end
 
   pipeline :api do
@@ -42,7 +42,7 @@ defmodule ManateeWeb.Router do
   end
 
   scope "/", ManateeWeb do
-    pipe_through [:browser]
+    pipe_through [:browser, :require_authenticated_user]
 
     resources "/locations", LocationController
 

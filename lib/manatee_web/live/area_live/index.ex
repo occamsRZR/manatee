@@ -16,15 +16,11 @@ defmodule ManateeWeb.AreaLive.Index do
   def mount(_params, session, socket) do
     socket =
       socket
-      |> assign_new(:areas, fn -> list_areas() end)
       |> assign_new(:current_user, fn ->
         ManateeWeb.Live.AuthHelper.load_user!(session)
       end)
 
-    socket =
-      assign_new(socket, :current_live_user, fn ->
-        socket.assigns.current_user
-      end)
+    socket = assign_new(socket, :areas, fn -> list_areas(socket.assigns.current_user.id) end)
 
     {:ok, socket}
   end
@@ -57,10 +53,10 @@ defmodule ManateeWeb.AreaLive.Index do
     area = Areas.get_area!(id)
     {:ok, _} = Areas.delete_area(area)
 
-    {:noreply, assign(socket, :areas, list_areas())}
+    {:noreply, assign(socket, :areas, list_areas(0))}
   end
 
-  defp list_areas do
-    Areas.list_areas() |> Manatee.Repo.preload(:location)
+  defp list_areas(user_id) do
+    Areas.by_user_id(user_id) |> Manatee.Repo.preload(:location)
   end
 end

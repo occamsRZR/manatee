@@ -5,6 +5,7 @@
     id: @area.id,
     title: @page_title,
     action: @live_action,
+    user_id: @current_user.id,
     area: @area,
     return_to: Routes.area_show_path(@socket, :show, @area) %>
 <% end %>
