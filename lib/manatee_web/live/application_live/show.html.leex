@@ -33,6 +33,17 @@
     <%= @application.applied_at %>
   </li>
 
+
+  <li>
+    <strong>GDD(0C) Since Application:</strong>
+    <%= @gdds.gdd_0c %>
+  </li>
+
+  <li>
+    <strong>GDD(10C) Since Application:</strong>
+    <%= @gdds.gdd_10c %>
+  </li>
+
 </ul>
 
 <h3> Products Applied: </h3>
@@ -40,8 +51,7 @@
     <%= for application_product <- @application.application_products do %>
     <li>
       <strong>Product:</strong>
-      <%= application_product.product_id %>
-      <%= application_product.product_id %>
+      <%= application_product.product.name %>
       <strong>Interval:</strong>
       <%= application_product.interval %>
       <%= application_product.interval_unit %>
