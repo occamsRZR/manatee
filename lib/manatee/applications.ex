@@ -130,7 +130,9 @@ defmodule Manatee.Applications do
           area.id == app.area_id and
             loc.id == area.location_id and
             loc.id == lw.location_id,
-        where: app.id == ^application.id,
+        where:
+          app.id == ^application.id and
+            lw.day >= fragment("?", type(^application.applied_at, :date)),
         select: %{
           min_temp: lw.min_temp,
           max_temp: lw.max_temp,
@@ -147,6 +149,7 @@ defmodule Manatee.Applications do
         GDDUtility.calc_gdd(weather.min_temp, weather.max_temp, 0)
       end)
       |> Enum.sum()
+      |> :erlang.float()
       |> :erlang.float_to_binary(decimals: 1)
 
     gdd_10c =
@@ -155,6 +158,7 @@ defmodule Manatee.Applications do
         GDDUtility.calc_gdd(weather.min_temp, weather.max_temp, 10)
       end)
       |> Enum.sum()
+      |> :erlang.float()
       |> :erlang.float_to_binary(decimals: 1)
 
     {:ok, %{gdd_0c: gdd_0c, gdd_10c: gdd_10c}}
