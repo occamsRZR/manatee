@@ -2,11 +2,16 @@ defmodule Manatee.Applications do
   @moduledoc """
   The Applications context.
   """
-
+  import Ecto.Query, only: [from: 2]
   import Ecto.Query, warn: false
   alias Manatee.Repo
+  alias Manatee.GDDUtility
 
   alias Manatee.Applications.Application
+  alias Manatee.Locations
+  alias Manatee.Locations.Location
+  alias Manatee.Locations.LocationWeather
+  alias Manatee.Areas.Area
 
   @doc """
   Returns the list of applications.
@@ -19,6 +24,16 @@ defmodule Manatee.Applications do
   """
   def list_applications do
     Repo.all(Application)
+  end
+
+  def by_user_id(user_id) do
+    location_ids = Locations.by_user_id(user_id) |> Enum.map(fn loc -> loc.id end)
+
+    #    from(
+    #      a in Application, ar in Area,
+    #      where: ar.location_id in ^location_ids
+    #    )
+    #    |> Repo.all()
   end
 
   @doc """
@@ -103,6 +118,46 @@ defmodule Manatee.Applications do
     application
     |> Repo.preload(application_products: :product)
     |> Application.changeset(attrs)
+  end
+
+  def gdd_since_application(%Application{} = application) do
+    weathers =
+      from(app in Application,
+        join: area in Area,
+        join: loc in Location,
+        join: lw in LocationWeather,
+        on:
+          area.id == app.area_id and
+            loc.id == area.location_id and
+            loc.id == lw.location_id,
+        where: app.id == ^application.id,
+        select: %{
+          min_temp: lw.min_temp,
+          max_temp: lw.max_temp,
+          humidity: lw.humidity,
+          desc: app.description,
+          area_name: area.name
+        }
+      )
+      |> Repo.all()
+
+    gdd_0c =
+      weathers
+      |> Enum.map(fn weather ->
+        GDDUtility.calc_gdd(weather.min_temp, weather.max_temp, 0)
+      end)
+      |> Enum.sum()
+      |> :erlang.float_to_binary(decimals: 1)
+
+    gdd_10c =
+      weathers
+      |> Enum.map(fn weather ->
+        GDDUtility.calc_gdd(weather.min_temp, weather.max_temp, 10)
+      end)
+      |> Enum.sum()
+      |> :erlang.float_to_binary(decimals: 1)
+
+    {:ok, %{gdd_0c: gdd_0c, gdd_10c: gdd_10c}}
   end
 
   alias Manatee.Applications.ApplicationProduct
