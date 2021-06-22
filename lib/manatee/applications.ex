@@ -132,7 +132,7 @@ defmodule Manatee.Applications do
             loc.id == lw.location_id,
         where:
           app.id == ^application.id and
-            lw.day >= fragment("?::date", type(^application.applied_at, :date)),
+            lw.day >= fragment("?", type(^application.applied_at, :date)),
         select: %{
           min_temp: lw.min_temp,
           max_temp: lw.max_temp,
