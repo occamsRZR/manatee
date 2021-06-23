@@ -18,9 +18,13 @@
         <div class="flex items-center space-x-1">
           <div class="hidden md:inline-flex space-x-1">
             <%= link "Home", to: Routes.page_path(@conn, :index), class: "btn btn-sm btn-link" %>
-            <%= if function_exported?(Routes, :live_dashboard_path, 2) do %>
-              <%= link "LiveDashboard", to: Routes.live_dashboard_path(@conn, :home), class: "btn btn-sm btn-link" %>
-            <% end %>
+
+              <%= if @current_user do %>
+                <%= link "Locations", to: Routes.location_path(@conn, :index), class: "px-2" %>
+                <%= link "Areas", to: Routes.area_index_path(@conn, :index), class: "px-2" %>
+                <%= link "Applications", to: Routes.application_index_path(@conn, :index), class: "px-2"  %>
+                <%= link "Products", to: Routes.product_index_path(@conn, :index), class: "px-2"  %>
+              <% end %>
           </div>
           <%= render "_user_menu.html", assigns %>
           <div class="inline-flex md:hidden" x-data="{ open: false }">
@@ -63,8 +67,14 @@
                 <span class="sr-only">Close Menu</span>
               </button>
               <%= link "Home", to: Routes.page_path(@conn, :index), class: "btn btn-link w-full" %>
-              <%= if function_exported?(Routes, :live_dashboard_path, 2) do %>
-                <%= link "LiveDashboard", to: Routes.live_dashboard_path(@conn, :home), class: "btn btn-link w-full" %>
+              <%= if @current_user do %>
+                 <%= link "Locations", to: Routes.location_path(@conn, :index) %>
+                <%= link "Areas", to: Routes.area_index_path(@conn, :index) %>
+                <%= link "Applications", to: Routes.application_index_path(@conn, :index) %>
+                <%= link "Products", to: Routes.product_index_path(@conn, :index) %>
+
+                <%= link "Settings", to: Routes.user_settings_path(@conn, :edit) %>
+                <%= link "Log out", to: Routes.user_session_path(@conn, :delete), method: :delete %>
               <% end %>
             </div>
           </div>
