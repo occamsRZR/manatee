@@ -19,7 +19,7 @@
   <%= error_tag f, :rate %>
 
   <%= label f, :rate_unit %>
-  <%= text_input f, :rate_unit %>
+  <%= select f, :rate_unit, @rate_units %>
   <%= error_tag f, :rate_unit %>
 
   <%= label f, :interval %>
@@ -27,8 +27,40 @@
   <%= error_tag f, :interval %>
 
   <%= label f, :interval_unit %>
-  <%= text_input f, :interval_unit %>
+  <%= select f, :interval_unit, @interval_units %>
   <%= error_tag f, :interval_unit %>
+
+  <%= label f, :n_analysis %>
+  <%= text_input f, :n_analysis %>
+  <%= error_tag f, :n_analysis %>
+
+  <%= label f, :p_analysis %>
+  <%= text_input f, :p_analysis %>
+  <%= error_tag f, :p_analysis %>
+
+  <%= label f, :k_analysis %>
+  <%= text_input f, :k_analysis %>
+  <%= error_tag f, :k_analysis %>
+
+  <%= label f, :ca_analysis %>
+  <%= text_input f, :ca_analysis %>
+  <%= error_tag f, :ca_analysis %>
+
+  <%= label f, :mg_analysis %>
+  <%= text_input f, :mg_analysis %>
+  <%= error_tag f, :mg_analysis %>
+
+  <%= label f, :s_analysis %>
+  <%= text_input f, :s_analysis %>
+  <%= error_tag f, :s_analysis %>
+
+  <%= label f, :fe_analysis %>
+  <%= text_input f, :fe_analysis %>
+  <%= error_tag f, :fe_analysis %>
+
+  <%= label f, :mn_analysis %>
+  <%= text_input f, :mn_analysis %>
+  <%= error_tag f, :mn_analysis %>
 
   <%= submit "Save", phx_disable_with: "Saving..." %>
 </form>

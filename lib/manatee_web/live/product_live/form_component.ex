@@ -2,14 +2,19 @@ defmodule ManateeWeb.ProductLive.FormComponent do
   use ManateeWeb, :live_component
 
   alias Manatee.Products
+  alias Manatee.Products.Product
 
   @impl true
   def update(%{product: product} = assigns, socket) do
     changeset = Products.change_product(product)
+    interval_units = Ecto.Enum.values(Product, :interval_unit) |> Enum.map(&Atom.to_string/1)
+    rate_units = Ecto.Enum.values(Product, :rate_unit) |> Enum.map(&Atom.to_string/1)
 
     {:ok,
      socket
      |> assign(assigns)
+     |> assign(:interval_units, interval_units)
+     |> assign(:rate_units, rate_units)
      |> assign(:changeset, changeset)}
   end
 
