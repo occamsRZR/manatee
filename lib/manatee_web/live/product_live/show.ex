@@ -2,6 +2,7 @@ defmodule ManateeWeb.ProductLive.Show do
   use ManateeWeb, :live_view
 
   alias Manatee.Products
+  alias ManateeWeb.ProductLive.ProductDetailComponent
 
   @impl true
   def mount(_params, _session, socket) do
