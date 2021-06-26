@@ -1,11 +1,12 @@
 module.exports = {
-  mode: 'jit',
   purge: [
-    "../lib/**/*.eex",
-    "../lib/**/*.leex",
-    "../lib/**/*_view.ex",
-    "../lib/**/views/*.ex"
+    "../**/*.html.eex",
+    "../**/*.html.leex",
+    "../**/views/**/*.ex",
+    "../**/live/**/*.ex",
+    "./js/**/*.js",
   ],
+  darkMode: 'media',
   plugins: [
     require('@tailwindcss/forms'),
     require('@tailwindcss/typography')

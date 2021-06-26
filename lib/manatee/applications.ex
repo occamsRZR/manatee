@@ -116,7 +116,7 @@ defmodule Manatee.Applications do
   """
   def change_application(%Application{} = application, attrs \\ %{}) do
     application
-    |> Repo.preload(application_products: :product)
+    |> Repo.preload(:area, application_products: :product)
     |> Application.changeset(attrs)
   end
 
