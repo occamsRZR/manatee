@@ -1,6 +1,7 @@
 defmodule Manatee.Applications.Application do
   use Ecto.Schema
   import Ecto.Changeset
+  alias Manatee.Applications.ApplicationProduct
 
   @primary_key {:id, :binary_id, autogenerate: true}
   @foreign_key_type :binary_id
@@ -8,8 +9,8 @@ defmodule Manatee.Applications.Application do
     field :applied_at, :utc_datetime
     field :description, :string
     belongs_to :area, Manatee.Areas.Area
-    has_many :application_products, Manatee.Applications.ApplicationProduct
 
+    has_many :application_products, ApplicationProduct, on_delete: :delete_all
     timestamps()
   end
 

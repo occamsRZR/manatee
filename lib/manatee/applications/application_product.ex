@@ -6,9 +6,19 @@ defmodule Manatee.Applications.ApplicationProduct do
   @foreign_key_type :binary_id
   schema "application_products" do
     field :interval, :integer
-    field :interval_unit, Ecto.Enum, values: [:gdd, :days]
+    field :interval_unit, Ecto.Enum, values: [:day, :gdd]
+
     field :rate, :float
-    field :rate_unit, Ecto.Enum, values: [:oz_per_m, :g_per_m, :lbs_per_m, :kg_per_m]
+
+    field :rate_unit, Ecto.Enum,
+      values: [
+        :g_per_m,
+        :oz_per_m,
+        :ml_per_m,
+        :lb_per_m,
+        :floz_per_m
+      ]
+
     field :temp_id, :string, virtual: true
     field :delete, :boolean, virtual: true
     belongs_to :application, Manatee.Applications.Application
@@ -32,7 +42,7 @@ defmodule Manatee.Applications.ApplicationProduct do
       :application_id,
       :product_id
     ])
-    |> validate_required([:rate, :rate_unit, :interval, :interval_unit])
+    |> validate_required([:rate, :rate_unit, :interval, :interval_unit, :product_id])
     |> maybe_mark_for_deletion()
   end
 

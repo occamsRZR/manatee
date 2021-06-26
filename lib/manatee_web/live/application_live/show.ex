@@ -4,6 +4,7 @@ defmodule ManateeWeb.ApplicationLive.Show do
   alias Manatee.Applications
   alias Manatee.Products
   alias Manatee.Areas
+  alias ManateeWeb.ApplicationLive.ApplicationProductLifeComponent
 
   @impl true
   def mount(_params, session, socket) do

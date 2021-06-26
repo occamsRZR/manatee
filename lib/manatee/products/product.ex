@@ -7,7 +7,7 @@ defmodule Manatee.Products.Product do
   schema "products" do
     field :ingredients, :string
     field :interval, :string
-    field :interval_unit, Ecto.Enum, values: [:day, :gdd]
+    field :interval_unit, Ecto.Enum, values: [:day, :gdd, :none]
     field :name, :string
     field :rate, :float
 
@@ -25,7 +25,8 @@ defmodule Manatee.Products.Product do
         :g_per_m,
         :oz_per_m,
         :ml_per_m,
-        :lb_per_m
+        :lb_per_m,
+        :floz_per_m
       ]
 
     timestamps()
