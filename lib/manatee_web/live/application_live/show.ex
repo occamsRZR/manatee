@@ -29,7 +29,7 @@ defmodule ManateeWeb.ApplicationLive.Show do
       Areas.by_user_id(current_user.id)
       |> Enum.map(fn area -> [key: area.name, value: area.id] end)
 
-    application = Applications.get_application!(id)
+    application = Applications.get_application!(id) |> Manatee.Repo.preload(:area)
     {:ok, gdds} = Applications.gdd_since_application(application)
 
     {:noreply,
