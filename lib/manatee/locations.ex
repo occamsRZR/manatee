@@ -190,7 +190,7 @@ defmodule Manatee.Locations do
 
       temps = data["hourly"] |> Enum.map(fn hour -> hour["temp"] end)
       IO.inspect(temps)
-      humidity = data["hourly"] |> Enum.map(fn hour -> hour["humidity"] end) |> Enum.avg()
+      # humidity = data["hourly"] |> Enum.map(fn hour -> hour["humidity"] end) |> Enum.avg()
       min_temp = Enum.min(temps) - 273.15
       max_temp = Enum.max(temps) - 273.15
 
@@ -198,7 +198,7 @@ defmodule Manatee.Locations do
         min_temp: min_temp,
         max_temp: max_temp,
         location_id: location_id,
-        humidity: humidity,
+        # humidity: humidity,
         day: dt
       })
     end)
