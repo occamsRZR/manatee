@@ -6,7 +6,7 @@ config :manatee, Manatee.Repo,
   password: "postgres",
   database: "manatee_dev",
   hostname: "localhost",
-  port: 5432,
+  port: 5434,
   show_sensitive_data_on_connection_error: true,
   pool_size: 10
 

@@ -12,6 +12,8 @@ defmodule Manatee.Applications do
   alias Manatee.Locations.Location
   alias Manatee.Locations.LocationWeather
   alias Manatee.Areas.Area
+  alias Manatee.Accounts.User
+
 
   @doc """
   Returns the list of applications.
@@ -28,12 +30,18 @@ defmodule Manatee.Applications do
 
   def by_user_id(user_id) do
     location_ids = Locations.by_user_id(user_id) |> Enum.map(fn loc -> loc.id end)
-
-    #    from(
-    #      a in Application, ar in Area,
-    #      where: ar.location_id in ^location_ids
-    #    )
-    #    |> Repo.all()
+    from(app in Application,
+        join: area in Area,
+        join: loc in Location,
+        join: user in User,
+        on:
+          area.id == app.area_id and
+            loc.id == area.location_id and
+            loc.user_id == user.id,
+        where:
+          user.id == ^user_id
+    )
+    |> Repo.all()
   end
 
   @doc """

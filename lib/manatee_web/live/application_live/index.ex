@@ -63,6 +63,6 @@ defmodule ManateeWeb.ApplicationLive.Index do
   end
 
   defp list_applications(user_id) do
-    Applications.list_applications() |> Manatee.Repo.preload(:area)
+    Applications.by_user_id(user_id) |> Manatee.Repo.preload(:area)
   end
 end
