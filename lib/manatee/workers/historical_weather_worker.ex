@@ -6,7 +6,7 @@ defmodule Manatee.Workers.HistoricalWeatherWorker do
   @impl Oban.Worker
   def perform(_job) do
     # Perform some work and then return :ok
-    Locations.list_locations()
+    Locations.by_geocoded()
     |> Enum.map(fn loc ->
       Locations.backfill_location_weather(loc.id, 1)
     end)
