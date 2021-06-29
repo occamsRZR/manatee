@@ -33,6 +33,14 @@ defmodule Manatee.Locations do
     |> Repo.all()
   end
 
+  def by_geocoded() do
+    from(
+      l in Location,
+      where: not is_nil(l.lat)
+    )
+    |> Repo.all()
+  end
+
   @doc """
   Gets a single location.
 
@@ -181,6 +189,8 @@ defmodule Manatee.Locations do
         ExOwm.get_historical_weather([%{lat: location.lat, lon: location.lon, dt: unix_dt}])
 
       temps = data["hourly"] |> Enum.map(fn hour -> hour["temp"] end)
+      IO.inspect(temps)
+      humidity = data["hourly"] |> Enum.map(fn hour -> hour["humidity"] end) |> Enum.avg()
       min_temp = Enum.min(temps) - 273.15
       max_temp = Enum.max(temps) - 273.15
 
@@ -188,6 +198,7 @@ defmodule Manatee.Locations do
         min_temp: min_temp,
         max_temp: max_temp,
         location_id: location_id,
+        humidity: humidity,
         day: dt
       })
     end)
