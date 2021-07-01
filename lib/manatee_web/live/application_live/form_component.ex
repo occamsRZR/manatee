@@ -2,7 +2,7 @@ defmodule ManateeWeb.ApplicationLive.FormComponent do
   use ManateeWeb, :live_component
 
   alias Manatee.Applications
-  alias Manatee.Applications.ApplicationProduct
+  alias ManateeWeb.ApplicationLive.DateTimePickerComponent
 
   @impl true
   def update(%{application: application} = assigns, socket) do
@@ -19,10 +19,6 @@ defmodule ManateeWeb.ApplicationLive.FormComponent do
     changeset =
       socket.assigns.application
       |> Applications.change_application(application_params)
-      |> Ecto.Changeset.put_assoc(
-        :application_products,
-        application_params[:application_products]
-      )
       |> Map.put(:action, :validate)
 
     {:noreply, assign(socket, :changeset, changeset)}
