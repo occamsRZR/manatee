@@ -33,9 +33,7 @@ defmodule Manatee.Locations.Location do
       location_info = Map.merge(location, changeset.changes)
 
       case Geocoder.call(
-             location_info.address <>
-               " " <>
-               location_info.city <>
+             location_info.city <>
                ", " <>
                location_info.state <>
                " " <>
