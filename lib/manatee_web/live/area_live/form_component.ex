@@ -2,6 +2,7 @@ defmodule ManateeWeb.AreaLive.FormComponent do
   use ManateeWeb, :live_component
 
   alias Manatee.Areas
+  alias Manatee.Areas.Area
   alias Manatee.Locations
 
   @impl true
@@ -12,10 +13,13 @@ defmodule ManateeWeb.AreaLive.FormComponent do
       Locations.by_user_id(user_id)
       |> Enum.map(fn loc -> [key: loc.name, value: loc.id] end)
 
+    grass_types = Ecto.Enum.values(Area, :grass_type) |> Enum.map(&Atom.to_string/1)
+
     {:ok,
      socket
      |> assign(assigns)
      |> assign(:changeset, changeset)
+     |> assign(:grass_types, grass_types)
      |> assign(:locations, locations)}
   end
 

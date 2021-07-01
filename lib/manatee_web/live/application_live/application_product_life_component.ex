@@ -1,7 +1,23 @@
 defmodule ManateeWeb.ApplicationLive.ApplicationProductLifeComponent do
   use Phoenix.LiveComponent
 
-  def calculate_lifespan_percentage(%{gdd: gdd, interval: gdd_interval, interval_unit: :gdd}) do
+  def calculate_lifespan_percentage(%{
+        gdd_0c: gdd,
+        interval: gdd_interval,
+        interval_unit: :gdd,
+        grass_type: :cool_season
+      }) do
+    {gdd, _} = gdd |> Float.parse()
+    gdd = gdd * 100.0
+    (gdd / gdd_interval) |> :erlang.float_to_binary(decimals: 1)
+  end
+
+  def calculate_lifespan_percentage(%{
+        gdd_10c: gdd,
+        interval: gdd_interval,
+        interval_unit: :gdd,
+        grass_type: :warm_season
+      }) do
     {gdd, _} = gdd |> Float.parse()
     gdd = gdd * 100.0
     (gdd / gdd_interval) |> :erlang.float_to_binary(decimals: 1)
@@ -24,9 +40,15 @@ defmodule ManateeWeb.ApplicationLive.ApplicationProductLifeComponent do
     Timex.diff(Timex.today(), date, :days)
   end
 
-  def render_lifespan_text(assigns, %{interval_unit: :gdd}) do
+  def render_lifespan_text(assigns, %{interval_unit: :gdd, grass_type: :cool_season}) do
     ~L"""
-    <div> <%= @gdds.gdd_0c %> / <%= @application_product.interval %> <%= @application_product.product.interval_unit %> </div>
+    <div> <%= @gdds.gdd_0c %> / <%= @application_product.interval %> <%= @application_product.product.interval_unit %> GDD (0C) </div>
+    """
+  end
+
+  def render_lifespan_text(assigns, %{interval_unit: :gdd, grass_type: :warm_season}) do
+    ~L"""
+    <div> <%= @gdds.gdd_10c %> / <%= @application_product.interval %> <%= @application_product.product.interval_unit %> GDD (0C) </div>
     """
   end
 
@@ -39,6 +61,8 @@ defmodule ManateeWeb.ApplicationLive.ApplicationProductLifeComponent do
   def render_lifespan_text(_, _), do: nil
 
   def render(assigns) do
+    IO.inspect(assigns.application.area.grass_type)
+
     ~L"""
 
     <!-- Define the width model within parent div -->
@@ -46,10 +70,12 @@ defmodule ManateeWeb.ApplicationLive.ApplicationProductLifeComponent do
         class="my-10"
         x-data="{ width: '<%= calculate_lifespan_percentage(
           %{
-            gdd: @gdds.gdd_0c,
+            gdd_0c: @gdds.gdd_0c,
+            gdd_10c: @gdds.gdd_10c,
             interval: @application_product.interval,
             interval_unit: @application_product.product.interval_unit,
-            applied_at: @application.applied_at
+            applied_at: @application.applied_at,
+            grass_type: @application.area.grass_type
           })
         %>' }"
         x-init="$watch('width', value => { if (value > 100) { width = 100 } if (value == 0) { width = 10 } })"
@@ -64,7 +90,8 @@ defmodule ManateeWeb.ApplicationLive.ApplicationProductLifeComponent do
                   gdd_0c: @gdds.gdd_0c,
                   gdd_10c: @gdds.gdd_10c,
                   interval_unit: @application_product.product.interval_unit,
-                  inverval: @application_product.interval
+                  inverval: @application_product.interval,
+                  grass_type: @application.area.grass_type
               }) %>
 
             <div

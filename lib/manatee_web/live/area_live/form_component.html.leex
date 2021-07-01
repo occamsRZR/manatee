@@ -22,5 +22,9 @@
   <%= select f, :location_id, @locations %>
   <%= error_tag f, :location %>
 
+  <%= label f, :grass_type %>
+  <%= select f, :grass_type, @grass_types %>
+  <%= error_tag f, :grass_type %>
+
   <%= submit "Save", phx_disable_with: "Saving..." %>
 </form>

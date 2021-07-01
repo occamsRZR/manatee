@@ -10,6 +10,13 @@ defmodule Manatee.Areas.Area do
     field :area, :integer
     field :area_unit, :string
     field :name, :string
+
+    field :grass_type, Ecto.Enum,
+      values: [
+        :cool_season,
+        :warm_season
+      ]
+
     belongs_to(:location, Location)
 
     timestamps()
@@ -18,7 +25,7 @@ defmodule Manatee.Areas.Area do
   @doc false
   def changeset(area, attrs) do
     area
-    |> cast(attrs, [:name, :area, :area_unit, :location_id])
-    |> validate_required([:name, :area, :area_unit, :location_id])
+    |> cast(attrs, [:name, :area, :area_unit, :location_id, :grass_type])
+    |> validate_required([:name, :area, :area_unit, :location_id, :grass_type])
   end
 end
