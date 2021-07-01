@@ -14,7 +14,7 @@ defmodule Manatee.Locations.Location do
     field :zip, :string
     field :lat, :float
     field :lon, :float
-    has_many :weathers, LocationWeather
+    has_many :weathers, LocationWeather, on_delete: :delete_all
     belongs_to :user, Manatee.Accounts.User, type: :integer
 
     timestamps()
