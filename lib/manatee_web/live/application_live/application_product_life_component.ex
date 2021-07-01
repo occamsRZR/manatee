@@ -48,7 +48,7 @@ defmodule ManateeWeb.ApplicationLive.ApplicationProductLifeComponent do
 
   def render_lifespan_text(assigns, %{interval_unit: :gdd, grass_type: :warm_season}) do
     ~L"""
-    <div> <%= @gdds.gdd_10c %> / <%= @application_product.interval %> <%= @application_product.product.interval_unit %> GDD (0C) </div>
+    <div> <%= @gdds.gdd_10c %> / <%= @application_product.interval %> <%= @application_product.product.interval_unit %> GDD (10C) </div>
     """
   end
 
