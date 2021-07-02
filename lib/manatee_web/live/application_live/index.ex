@@ -10,7 +10,11 @@ defmodule ManateeWeb.ApplicationLive.Index do
   @impl true
   def mount(_params, session, socket) do
     current_user = ManateeWeb.Live.AuthHelper.load_user!(session)
-    areas = Areas.by_user_id(current_user.id) |> Enum.map(fn area -> [key: area.name, value: area.id] end)
+
+    areas =
+      Areas.by_user_id(current_user.id)
+      |> Enum.map(fn area -> [key: area.name, value: area.id] end)
+
     {:ok,
      assign(socket, :applications, list_applications(current_user.id))
      |> assign(:areas, areas)
@@ -45,7 +49,10 @@ defmodule ManateeWeb.ApplicationLive.Index do
   defp apply_action(socket, :new, _params) do
     socket
     |> assign(:page_title, "New Application")
-    |> assign(:application, %Application{application_products: []})
+    |> assign(:application, %Application{
+      applied_at: DateTime.now!("Etc/UTC"),
+      application_products: []
+    })
   end
 
   defp apply_action(socket, :index, _params) do
