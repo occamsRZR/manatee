@@ -10,8 +10,42 @@ defmodule Manatee.HargreavesEquation do
     calculate_eto(18.61, 30.04, 24.33, et_rad)
   end
 
+  def calculate_eto(%Manatee.Locations.Location{} = location, min_temp, max_temp, date) do
+    avg_temp = (min_temp + max_temp) / 2
+    lat_rad = deg_to_rad(location.lat)
+    day_of_year = date |> Timex.day()
+    sol_dec = solar_declination(day_of_year)
+    sha = sunset_hour_angle(lat_rad, sol_dec)
+    ird = inv_rel_dist_earth_sun(day_of_year)
+    et_rad = et_rad(lat_rad, sol_dec, sha, ird)
+    calculate_eto(min_temp, max_temp, avg_temp, et_rad)
+  end
+
+  @doc """
+  Estimate reference evapotranspiration over grass (ETo) using the Hargreaves
+  equation.
+  Generally, when solar radiation data, relative humidity data
+  and/or wind speed data are missing, it is better to estimate them using
+  the functions available in this module, and then calculate ETo
+  the FAO Penman-Monteith equation. However, as an alternative, ETo can be
+  estimated using the Hargreaves ETo equation.
+  Based on equation 52 in Allen et al (1998).
+  :param tmin: Minimum daily temperature [deg C]
+  :param tmax: Maximum daily temperature [deg C]
+  :param tmean: Mean daily temperature [deg C]. If emasurements not
+      available it can be estimated as (*tmin* + *tmax*) / 2.
+  :param et_rad: Extraterrestrial radiation (Ra) [MJ m-2 day-1]. Can be
+      estimated using ``et_rad()``.
+  :return: Reference evapotranspiration over grass (ETo) [mm day-1]
+  :rtype: float
+  # Note, multiplied by 0.408 to convert extraterrestrial radiation could
+  # be given in MJ m-2 day-1 rather than as equivalent evaporation in
+  # mm day-1
+   return 0.0023 * (tmean + 17.8) * (tmax - tmin) ** 0.5 * 0.408 * et_rad
+  """
   def calculate_eto(min_temp, max_temp, avg_temp, et_rad) do
-    :math.pow(0.0023 * (avg_temp + 17.8) * (max_temp - min_temp), 0.5 * 0.408 * et_rad)
+    # :math.pow(0.0023 * (avg_temp + 17.8) * (max_temp - min_temp), 0.5 * 0.408 * et_rad)
+    0.0023 * (avg_temp + 17.8) * :math.pow(max_temp - min_temp, 0.5) * 0.408 * et_rad
   end
 
   @doc """

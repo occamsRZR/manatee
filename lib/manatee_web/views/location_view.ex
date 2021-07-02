@@ -15,4 +15,8 @@ defmodule ManateeWeb.LocationView do
   def gdd(min_temp, max_temp, base) do
     GDDUtility.calc_gdd(min_temp, max_temp, base)
   end
+
+  def eto_inches(%Manatee.Locations.Location{} = location, min_temp, max_temp, date) do
+    Manatee.HargreavesEquation.calculate_eto(location, min_temp, max_temp, date) / 25.4
+  end
 end

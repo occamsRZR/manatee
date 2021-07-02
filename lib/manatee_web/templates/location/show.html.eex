@@ -54,6 +54,7 @@
     <th>Max Temp(F)</th>
     <th>GDD(Base 0C)</th>
     <th>GCC(Base 10C)</th>
+    <th>ETo</th>
   </tr>
 
     <%= for weather <- @location.weathers do %>
@@ -65,6 +66,8 @@
     <td><%= weather.max_temp |> c_to_f |> format_temp %></td>
     <td><%= gdd(weather.min_temp, weather.max_temp, 0) |> format_temp %></td>
     <td><%= gdd(weather.min_temp, weather.max_temp, 10) |> format_temp %></td>
+    <td><%= eto_inches(@location, weather.min_temp, weather.max_temp, weather.day) |> :erlang.float_to_binary(decimals: 4) %>"</td>
+
     </tr>
     <% end %>
 </table>
