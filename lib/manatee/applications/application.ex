@@ -24,7 +24,7 @@ defmodule Manatee.Applications.Application do
   end
 
   defp parse_applied_at(attrs) do
-    case Timex.parse(attrs["applied_at"], "%b %d, %Y %l:%M %p", :strftime) do
+    case Timex.parse(attrs["applied_at"], "%b %e, %Y %l:%M %p", :strftime) do
       {:ok, date} -> Map.put(attrs, "applied_at", date)
       {:error, _} -> attrs
     end
