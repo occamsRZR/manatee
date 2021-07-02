@@ -1,15 +1,4 @@
 defmodule Manatee.HargreavesEquation do
-  def test_calculate_eto() do
-    location = Manatee.Locations.get_location!("3e5fa07e-822a-442f-87d0-4be826c8885a")
-    lat_rad = deg_to_rad(location.lat)
-    day_of_year = Timex.now() |> Timex.day()
-    sol_dec = solar_declination(day_of_year)
-    sha = sunset_hour_angle(lat_rad, sol_dec)
-    ird = inv_rel_dist_earth_sun(day_of_year)
-    et_rad = et_rad(lat_rad, sol_dec, sha, ird)
-    calculate_eto(18.61, 30.04, 24.33, et_rad)
-  end
-
   def calculate_eto(%Manatee.Locations.Location{} = location, min_temp, max_temp, date) do
     avg_temp = (min_temp + max_temp) / 2
     lat_rad = deg_to_rad(location.lat)

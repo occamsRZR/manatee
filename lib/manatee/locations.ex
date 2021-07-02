@@ -55,7 +55,16 @@ defmodule Manatee.Locations do
       ** (Ecto.NoResultsError)
 
   """
-  def get_location!(id), do: Repo.get!(Location, id) |> Repo.preload(:weathers)
+  def get_location!(id) do
+    Repo.get!(Location, id)
+    |> Repo.preload(
+      weathers:
+        from(
+          lw in LocationWeather,
+          order_by: [desc: lw.day]
+        )
+    )
+  end
 
   @doc """
   Creates a location.

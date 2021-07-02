@@ -1,76 +1,101 @@
-<h1>Show Location</h1>
-
-<ul>
-
-  <li>
-    <strong>Name:</strong>
-    <%= @location.name %>
-  </li>
-
-  <li>
-    <strong>Address:</strong>
-    <%= @location.address %>
-  </li>
-
-  <li>
-    <strong>City:</strong>
+<div class="bg-white shadow overflow-hidden sm:rounded-lg">
+  <div class="px-4 py-5 sm:px-6">
+    <h3 class="text-lg leading-6 font-medium text-gray-900">Location Information</h3>
+  </div>
+  <div class="border-t border-gray-200">
+    <dl>
+      <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-6 md:grid md:grid-cols-2 hover:bg-gray-50 md:space-y-0 space-y-1 p-4 border-b">
+        <p class="text-sm font-medium text-gray-500">
+          Name
+        </dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:mt-0">
+          <%= @location.name %>
+        </dd>
+      </div>
+      <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-6 md:grid md:grid-cols-2 hover:bg-gray-50 md:space-y-0 space-y-1 p-4 border-b">
+        <dt class="text-sm font-medium text-gray-500">
+          Address
+        </dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:mt-0">
+          <%= @location.address %>
+        </dd>
+      </div>
+      <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-6 md:grid md:grid-cols-2 hover:bg-gray-50 md:space-y-0 space-y-1 p-4 border-b">
+        <dt class="text-sm font-medium text-gray-500">
+          City
+        </dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:mt-0">
     <%= @location.city %>
-  </li>
+        </dd>
+      </div>
+      <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-6 md:grid md:grid-cols-2 hover:bg-gray-50 md:space-y-0 space-y-1 p-4 border-b">
+        <p class="text-sm font-medium text-gray-500">
+          State
+        </dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:mt-0">
+          <%= @location.state %>
+        </dd>
+      </div>
+      <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-6 md:grid md:grid-cols-2 hover:bg-gray-50 md:space-y-0 space-y-1 p-4 border-b">
+        <dt class="text-sm font-medium text-gray-500">
+          ZIP
+        </dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:mt-0">
+          <%= @location.zip %>
+        </dd>
+      </div>
+      <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-6 md:grid md:grid-cols-2 hover:bg-gray-50 md:space-y-0 space-y-1 p-4 border-b">
+        <dt class="text-sm font-medium text-gray-500">
+          Latitude
+        </dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:mt-0">
+          <%= @location.lat %>
+        </dd>
+      </div>
+      <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-6 md:grid md:grid-cols-2 hover:bg-gray-50 md:space-y-0 space-y-1 p-4 border-b">
+        <dt class="text-sm font-medium text-gray-500">
+          Longitude
+        </dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:mt-0">
+          <%= @location.lon %>
+        </dd>
+      </div>
+    </dl>
+  </div>
+</div>
 
-  <li>
-    <strong>State:</strong>
-    <%= @location.state %>
-  </li>
 
-  <li>
-    <strong>Zip:</strong>
-    <%= @location.zip %>
-  </li>
+<div class="mx-auto">
+  <div class="bg-white shadow-md rounded my-6">
+    <table class="text-left w-full border-collapse">
+      <tr class="hover:bg-grey-lighter">
+        <th class="py-4 px-6 bg-grey-lightest font-bold uppercase text-xs text-grey-dark border-b border-grey-light">Date</th>
+        <th class="py-4 px-6 bg-grey-lightest font-bold uppercase text-xs text-grey-dark border-b border-grey-light">Min Temp(C)</th>
+        <th class="py-4 px-6 bg-grey-lightest font-bold uppercase text-xs text-grey-dark border-b border-grey-light">Max Temp(C)</th>
+        <th class="py-4 px-6 bg-grey-lightest font-bold uppercase text-xs text-grey-dark border-b border-grey-light">Min Temp(F)</th>
+        <th class="py-4 px-6 bg-grey-lightest font-bold uppercase text-xs text-grey-dark border-b border-grey-light">Max Temp(F)</th>
+        <th class="py-4 px-6 bg-grey-lightest font-bold uppercase text-xs text-grey-dark border-b border-grey-light">GDD(Base 0C)</th>
+        <th class="py-4 px-6 bg-grey-lightest font-bold uppercase text-xs text-grey-dark border-b border-grey-light">GCC(Base 10C)</th>
+        <th class="py-4 px-6 bg-grey-lightest font-bold uppercase text-xs text-grey-dark border-b border-grey-light">ETo (0.8 Kc)</th>
+        <th class="py-4 px-6 bg-grey-lightest font-bold uppercase text-xs text-grey-dark border-b border-grey-light">ETo (0.6 Kc)</th>
+      </tr>
 
-    <li>
-    <strong>Lat:</strong>
-    <%= @location.lat %>
-  </li>
+        <%= for weather <- @location.weathers do %>
+        <tr class="hover:bg-grey-lighter">
+          <td class="py-4 px-6 text-xs border-b border-grey-light"><%= weather.day %></td>
+          <td class="py-4 px-6 text-xs border-b border-grey-light"><%= weather.min_temp |> format_temp %></td>
+          <td class="py-4 px-6 text-xs border-b border-grey-light"><%= weather.max_temp |> format_temp %></td>
+          <td class="py-4 px-6 text-xs border-b border-grey-light"><%= weather.min_temp |> c_to_f |> format_temp %></td>
+          <td class="py-4 px-6 text-xs border-b border-grey-light"><%= weather.max_temp |> c_to_f |> format_temp %></td>
+          <td class="py-4 px-6 text-xs border-b border-grey-light"><%= gdd(weather.min_temp, weather.max_temp, 0) |> format_temp %></td>
+          <td class="py-4 px-6 text-xs border-b border-grey-light"><%= gdd(weather.min_temp, weather.max_temp, 10) |> format_temp %></td>
+          <td class="py-4 px-6 text-xs border-b border-grey-light"><%= eto_inches(@location, weather.min_temp, weather.max_temp, weather.day, 0.8) |> :erlang.float_to_binary(decimals: 4) %>"</td>
+          <td class="py-4 px-6 text-xs border-b border-grey-light"><%= eto_inches(@location, weather.min_temp, weather.max_temp, weather.day, 0.6) |> :erlang.float_to_binary(decimals: 4) %>"</td>
 
-    <li>
-    <strong>Lon:</strong>
-    <%= @location.lon %>
-  </li>
-
-</ul>
-
-<ul>
-
-</ul>
-<h3>
-5-Day Weather
-</h3>
-<table style="width:100%">
-  <tr>
-    <th>Date</th>
-    <th>Min Temp(C)</th>
-    <th>Max Temp(C)</th>
-    <th>Min Temp(F)</th>
-    <th>Max Temp(F)</th>
-    <th>GDD(Base 0C)</th>
-    <th>GCC(Base 10C)</th>
-    <th>ETo</th>
-  </tr>
-
-    <%= for weather <- @location.weathers do %>
-    <tr>
-    <td><%= weather.day %></td>
-    <td><%= weather.min_temp |> format_temp %></td>
-    <td><%= weather.max_temp |> format_temp %></td>
-    <td><%= weather.min_temp |> c_to_f |> format_temp %></td>
-    <td><%= weather.max_temp |> c_to_f |> format_temp %></td>
-    <td><%= gdd(weather.min_temp, weather.max_temp, 0) |> format_temp %></td>
-    <td><%= gdd(weather.min_temp, weather.max_temp, 10) |> format_temp %></td>
-    <td><%= eto_inches(@location, weather.min_temp, weather.max_temp, weather.day) |> :erlang.float_to_binary(decimals: 4) %>"</td>
-
-    </tr>
-    <% end %>
-</table>
-
+        </tr>
+        <% end %>
+    </table>
+  </div>
+</div>
 <span><%= link "Edit", to: Routes.location_path(@conn, :edit, @location) %></span>
 <span><%= link "Back", to: Routes.location_path(@conn, :index) %></span>
