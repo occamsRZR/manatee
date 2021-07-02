@@ -9,37 +9,39 @@
     return_to: Routes.product_index_path(@socket, :index) %>
 <% end %>
 
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Ingredients</th>
-      <th>Rate</th>
-      <th>Rate unit</th>
-      <th>Interval</th>
-      <th>Interval unit</th>
+<div class="mx-auto">
+  <div class="bg-white shadow-md rounded my-6">
+    <table class="text-left w-full border-collapse">
+      <thead>
+        <tr>
+          <th class="py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">Name</th>
+          <th class="py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">Ingredients</th>
+          <th class="py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">Rate</th>
+          <th class="py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">Rate unit</th>
+          <th class="py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">Interval</th>
+          <th class="py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">Interval unit</th>
+          <th class="py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">Actions/th>
+        </tr>
+      </thead>
+      <tbody id="products">
+        <%= for product <- @products do %>
+          <tr class="hover:bg-grey-lighter" id="product-<%= product.id %>">
+            <td class="py-4 px-6 border-b border-grey-light"><%= product.name %></td>
+            <td class="py-4 px-6 border-b border-grey-light"><%= product.ingredients %></td>
+            <td class="py-4 px-6 border-b border-grey-light"><%= product.rate %></td>
+            <td class="py-4 px-6 border-b border-grey-light"><%= product.rate_unit %></td>
+            <td class="py-4 px-6 border-b border-grey-light"><%= product.interval %></td>
+            <td class="py-4 px-6 border-b border-grey-light"><%= product.interval_unit %></td>
 
-      <th></th>
-    </tr>
-  </thead>
-  <tbody id="products">
-    <%= for product <- @products do %>
-      <tr id="product-<%= product.id %>">
-        <td><%= product.name %></td>
-        <td><%= product.ingredients %></td>
-        <td><%= product.rate %></td>
-        <td><%= product.rate_unit %></td>
-        <td><%= product.interval %></td>
-        <td><%= product.interval_unit %></td>
-
-        <td>
-          <span><%= live_redirect "Show", to: Routes.product_show_path(@socket, :show, product) %></span>
-          <span><%= live_patch "Edit", to: Routes.product_index_path(@socket, :edit, product) %></span>
-          <span><%= link "Delete", to: "#", phx_click: "delete", phx_value_id: product.id, data: [confirm: "Are you sure?"] %></span>
-        </td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
+            <td class="py-4 px-6 border-b border-grey-light">
+              <span><%= live_redirect "Show", to: Routes.product_show_path(@socket, :show, product), class: "text-grey-lighter font-bold py-1 px-3 rounded text-xs bg-green hover:bg-green-dark" %></span>
+              <span><%= live_patch "Edit", to: Routes.product_index_path(@socket, :edit, product), class: "text-grey-lighter font-bold py-1 px-3 rounded text-xs bg-green hover:bg-green-dark" %></span>
+              <span><%= link "Delete", to: "#", phx_click: "delete", phx_value_id: product.id, data: [confirm: "Are you sure?"], class: "text-grey-lighter font-bold py-1 px-3 rounded text-xs bg-green hover:bg-green-dark" %></span>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
 <span><%= live_patch "New Product", to: Routes.product_index_path(@socket, :new) %></span>

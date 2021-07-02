@@ -1,8 +1,4 @@
-<div class="container mx-auto px-5 py-5">
-  <div class="pt-44 text-base font-bold">
-    <b>Listing Applications</b>
-  </div>
-</div>
+<h1>Listing Applications</h1>
 <%= if @live_action in [:new, :edit] do %>
   <%= live_modal @socket, ManateeWeb.ApplicationLive.FormComponent,
     id: @application.id || :new,
@@ -24,32 +20,34 @@
     return_to: Routes.application_index_path(@socket, :index) %>
 <% end %>
 
-<table class="table-auto">
-  <thead>
-    <tr>
-      <th>Description</th>
-      <th>Applied at</th>
-      <th>Area</th>
+<div class="mx-auto">
+  <div class="bg-white shadow-md rounded my-6">
+    <table class="text-left w-full border-collapse">
+      <thead>
+        <tr>
+          <th class="py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">Description</th>
+          <th class="py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">Applied at</th>
+          <th class="py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">Area</th>
+          <th class="py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">Actions</th>
+        </tr>
+      </thead>
+      <tbody id="applications">
+        <%= for application <- @applications do %>
+          <tr id="application-<%= application.id %>">
+            <td class="py-4 px-6 border-b border-grey-light"><%= application.description %></td>
+            <td class="py-4 px-6 border-b border-grey-light"><%= application.applied_at %></td>
+            <td class="py-4 px-6 border-b border-grey-light"><%= application.area.name %></td>
 
-      <th></th>
-    </tr>
-  </thead>
-  <tbody id="applications">
-    <%= for application <- @applications do %>
-      <tr id="application-<%= application.id %>">
-        <td><%= application.description %></td>
-        <td><%= application.applied_at %></td>
-        <td><%= application.area.name %></td>
-
-        <td>
-          <span><%= live_redirect "Show", to: Routes.application_show_path(@socket, :show, application) %></span>
-          <span><%= live_patch "Edit", to: Routes.application_index_path(@socket, :edit, application) %></span>
-          <span><%= live_patch "Add Products", to: Routes.application_index_path(@socket, :add_products, application) %></span>
-          <span><%= link "Delete", to: "#", phx_click: "delete", phx_value_id: application.id, data: [confirm: "Are you sure?"] %></span>
-        </td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
+            <td class="py-4 px-6 border-b border-grey-light">
+              <span><%= live_redirect "Show", to: Routes.application_show_path(@socket, :show, application), class: "text-grey-lighter font-bold py-1 px-3 rounded text-xs bg-green hover:bg-green-dark" %></span>
+              <span><%= live_patch "Edit", to: Routes.application_index_path(@socket, :edit, application), class: "text-grey-lighter font-bold py-1 px-3 rounded text-xs bg-green hover:bg-green-dark" %></span>
+              <span><%= live_patch "Add Products", to: Routes.application_index_path(@socket, :add_products, application), class: "text-grey-lighter font-bold py-1 px-3 rounded text-xs bg-green hover:bg-green-dark" %></span>
+              <span><%= link "Delete", to: "#", phx_click: "delete", phx_value_id: application.id, data: [confirm: "Are you sure?"], class: "text-grey-lighter font-bold py-1 px-3 rounded text-xs bg-green hover:bg-green-dark" %></span>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
 <span><%= live_patch "New Application", to: Routes.application_index_path(@socket, :new) %></span>
