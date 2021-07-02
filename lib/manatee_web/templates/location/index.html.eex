@@ -1,34 +1,37 @@
 <h1>Listing Locations</h1>
 
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Address</th>
-      <th>City</th>
-      <th>State</th>
-      <th>Zip</th>
+<div class="mx-auto">
+  <div class="bg-white shadow-md rounded my-6">
+    <table class="text-left w-full border-collapse"> <!--Border collapse doesn't work on this site yet but it's available in newer tailwind versions -->
+      <thead>
+        <tr>
+          <th class="py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">Name</th>
+          <th class="py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">Address</th>
+          <th class="py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">City</th>
+          <th class="py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">State</th>
+          <th class="py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">ZIP</th>
+          <th class="py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
 
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-<%= for location <- @locations do %>
-    <tr>
-      <td><%= location.name %></td>
-      <td><%= location.address %></td>
-      <td><%= location.city %></td>
-      <td><%= location.state %></td>
-      <td><%= location.zip %></td>
-
-      <td>
-        <span><%= link "Show", to: Routes.location_path(@conn, :show, location) %></span>
-        <span><%= link "Edit", to: Routes.location_path(@conn, :edit, location) %></span>
-        <span><%= link "Delete", to: Routes.location_path(@conn, :delete, location), method: :delete, data: [confirm: "Are you sure?"] %></span>
-      </td>
-    </tr>
-<% end %>
-  </tbody>
-</table>
+        <%= for location <- @locations do %>
+          <tr class="hover:bg-grey-lighter">
+            <td class="py-4 px-6 border-b border-grey-light"><%= location.name %></td>
+            <td class="py-4 px-6 border-b border-grey-light"><%= location.address %></td>
+            <td class="py-4 px-6 border-b border-grey-light"><%= location.city %></td>
+            <td class="py-4 px-6 border-b border-grey-light"><%= location.state %></td>
+            <td class="py-4 px-6 border-b border-grey-light"><%= location.zip %></td>
+            <td class="py-4 px-6 border-b border-grey-light">
+              <span><%= link "Show", to: Routes.location_path(@conn, :show, location), class: "text-grey-lighter font-bold py-1 px-3 rounded text-xs bg-green hover:bg-green-dark" %></span>
+              <span><%= link "Edit", to: Routes.location_path(@conn, :edit, location), class: "text-grey-lighter font-bold py-1 px-3 rounded text-xs bg-green hover:bg-green-dark" %></span>
+              <span><%= link "Delete", to: Routes.location_path(@conn, :delete, location), method: :delete, data: [confirm: "Are you sure?"], class: "text-grey-lighter font-bold py-1 px-3 rounded text-xs bg-green hover:bg-green-dark" %></span>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
 
 <span><%= link "New Location", to: Routes.location_path(@conn, :new) %></span>
