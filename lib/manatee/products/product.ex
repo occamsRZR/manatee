@@ -25,7 +25,7 @@ defmodule Manatee.Products.Product do
         :g_per_m,
         :oz_per_m,
         :ml_per_m,
-        :lb_per_m,
+        :lbs_per_m,
         :floz_per_m
       ]
 
