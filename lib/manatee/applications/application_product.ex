@@ -6,7 +6,7 @@ defmodule Manatee.Applications.ApplicationProduct do
   @foreign_key_type :binary_id
   schema "application_products" do
     field :interval, :integer
-    field :interval_unit, Ecto.Enum, values: [:day, :gdd]
+    field :interval_unit, Ecto.Enum, values: [:day, :gdd, :none]
 
     field :rate, :float
 
@@ -83,6 +83,8 @@ defmodule Manatee.Applications.ApplicationProduct do
   end
 
   defp pounds_per_m(changeset, _), do: changeset
+
+  defp calculate_lbs_per_m(_, analysis) when is_nil(analysis), do: 0.0
 
   defp calculate_lbs_per_m(rate, analysis) when is_float(rate) do
     # take rate, by percentage analysis, by 1/100th for total lbs/M

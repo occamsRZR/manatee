@@ -87,7 +87,7 @@ defmodule ManateeWeb.ApplicationLive.AddProductsComponent do
             <div class="px-4 py-5 bg-white sm:p-6">
               <div class="grid grid-cols-6 gap-6">
 
-                <div class="col-span-3 sm:col-span-3">
+                <div class="col-span-6 sm:col-span-6">
                   <%= label f, :product, class: "block text-sm font-medium text-gray-700 block text-sm font-medium text-gray-700" %>
                   <%= select f, :product_id, @products, phx_target: @myself, class: "mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" %>
                   <%= error_tag f, :product %>
@@ -95,6 +95,44 @@ defmodule ManateeWeb.ApplicationLive.AddProductsComponent do
 
                 <%= if @product do %>
                   <div class="col-span-3 sm:col-span-3">
+                    <%= label f, :rate,  class: "text-sm font-medium text-gray-700" %>
+                    <%= number_input f, :rate, step: "any", class: "mt-1 focus:ring-indigo-500 focus:border-indigo-500 block shadow-sm sm:text-sm border-gray-300 rounded-md" %>
+                    <%= error_tag f, :rate %>
+                  </div>
+                  <div class="col-span-3 sm:col-span-3">
+                    <%= label f, :rate_unit,  class: "text-sm font-medium text-gray-700" %>
+                    <%= select f, :rate_unit, @rate_units, value: @product.rate_unit, disabled: "disabled", class: "mt-1 py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"%>
+                    <%= hidden_input f, :rate_unit, value: @product.rate_unit %>
+                    <%= error_tag f, :rate_unit %>
+                  </div>
+                <% else %>
+                  <div class="col-span-3 sm:col-span-3">
+                    <%= label f, :rate,  class: "text-sm font-medium text-gray-700" %>
+                    <%= number_input f, :rate, step: "any", class: "mt-1 focus:ring-indigo-500 focus:border-indigo-500 block shadow-sm sm:text-sm border-gray-300 rounded-md" %>
+                    <%= error_tag f, :rate %>
+                  </div>
+                  <div class="col-span-3 sm:col-span-3">
+                    <%= label f, :rate_unit,  class: "text-sm font-medium text-gray-700" %>
+                    <%= select f, :rate_unit, @rate_units, class: "mt-1 py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"%>
+                    <%= error_tag f, :rate_unit %>
+                  </div>
+                <% end %>
+
+                <div class="col-span-6 sm:col-span-2">
+                  <%= label f, :interval,  class: "text-sm font-medium text-gray-700" %>
+                  <%= number_input f, :interval, step: "any", class: "mt-1 focus:ring-indigo-500 focus:border-indigo-500 block shadow-sm sm:text-sm border-gray-300 rounded-md" %>
+                  <%= error_tag f, :interval %>
+                </div>
+
+                <div class="col-span-6 sm:col-span-2">
+                  <%= label f, :interval_unit,  class: "text-sm font-medium text-gray-700" %>
+                  <%= select f, :interval_unit, @interval_units, class: "mt-1 py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"%>
+                  <%= error_tag f, :interval_unit %>
+                </div>
+
+                <%= hidden_input f, :application_id, value: @application.id %>
+                <%= if @product do %>
+                  <div class="col-span-6 sm:col-span-6">
                     <div class="block text-sm font-medium text-gray-700 block text-sm font-medium text-gray-700">
                       <%= @product.name %>
                     </div>
@@ -121,46 +159,6 @@ defmodule ManateeWeb.ApplicationLive.AddProductsComponent do
                   <div class="col-span-3 sm:col-span-3">
                   </div>
                 <% end %>
-
-
-                <%= if @product do %>
-                  <div class="col-span-2 sm:col-span-3">
-                    <%= label f, :rate,  class: "text-sm font-medium text-gray-700" %>
-                    <%= number_input f, :rate, step: "any", class: "mt-1 focus:ring-indigo-500 focus:border-indigo-500 block shadow-sm sm:text-sm border-gray-300 rounded-md" %>
-                    <%= error_tag f, :rate %>
-                  </div>
-                  <div class="col-span-2 sm:col-span-3">
-                    <%= label f, :rate_unit,  class: "text-sm font-medium text-gray-700" %>
-                    <%= select f, :rate_unit, @rate_units, value: @product.rate_unit, class: "mt-1 py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"%>
-                    <%= error_tag f, :rate_unit %>
-                  </div>
-                <% else %>
-                  <div class="col-span-2 sm:col-span-3">
-                    <%= label f, :rate,  class: "text-sm font-medium text-gray-700" %>
-                    <%= number_input f, :rate, step: "any", class: "mt-1 focus:ring-indigo-500 focus:border-indigo-500 block shadow-sm sm:text-sm border-gray-300 rounded-md" %>
-                    <%= error_tag f, :rate %>
-                  </div>
-                  <div class="col-span-2 sm:col-span-3">
-                    <%= label f, :rate_unit,  class: "text-sm font-medium text-gray-700" %>
-                    <%= select f, :rate_unit, @rate_units, class: "mt-1 py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"%>
-                    <%= error_tag f, :rate_unit %>
-                  </div>
-                <% end %>
-
-                <div class="col-span-6 sm:col-span-2">
-                  <%= label f, :interval,  class: "text-sm font-medium text-gray-700" %>
-                  <%= number_input f, :interval, step: "any", class: "mt-1 focus:ring-indigo-500 focus:border-indigo-500 block shadow-sm sm:text-sm border-gray-300 rounded-md" %>
-                  <%= error_tag f, :interval %>
-                </div>
-
-                <div class="col-span-6 sm:col-span-2">
-                  <%= label f, :interval_unit,  class: "text-sm font-medium text-gray-700" %>
-                  <%= select f, :interval_unit, @interval_units, class: "mt-1 py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"%>
-                  <%= error_tag f, :interval_unit %>
-                </div>
-
-                <%= hidden_input f, :application_id, value: @application.id %>
-
               </div>
             </div>
 
