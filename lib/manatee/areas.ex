@@ -66,7 +66,8 @@ defmodule Manatee.Areas do
         total_p: sum(app_pro.p_lbs_per_m),
         total_k: sum(app_pro.k_lbs_per_m)
       },
-      group_by: [app.description, app.id]
+      group_by: [app.description, app.id],
+      order_by: app.applied_at
     )
     |> Repo.all()
   end
