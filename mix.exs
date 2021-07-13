@@ -65,6 +65,9 @@ defmodule Manatee.MixProject do
       {:premailex, "~> 0.3.0"},
       {:floki, ">= 0.0.0"},
 
+      # Contex for SVG charts
+      {:contex, git: "https://github.com/mindok/contex.git", branch: "master"},
+
       # Geocoding locations
       {:geocoder, "~> 1.1"},
 

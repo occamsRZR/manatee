@@ -36,14 +36,16 @@ defmodule ManateeWeb.ApplicationLive.Index do
   end
 
   defp apply_action(socket, :add_products, %{"id" => id}) do
+    products =
+      Products.list_products() |> Enum.map(fn prod -> [key: prod.name, value: prod.id] end)
+
+    products = Enum.concat([[key: "", value: ""]], products)
+
     socket
     |> assign(:page_title, "Application Products")
     |> assign(:application, Applications.get_application!(id))
     |> assign(:application_product, %ApplicationProduct{application_id: id})
-    |> assign(
-      :products,
-      Products.list_products() |> Enum.map(fn prod -> [key: prod.name, value: prod.id] end)
-    )
+    |> assign(:products, products)
   end
 
   defp apply_action(socket, :new, _params) do

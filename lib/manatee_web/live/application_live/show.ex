@@ -11,14 +11,11 @@ defmodule ManateeWeb.ApplicationLive.Show do
     current_user = ManateeWeb.Live.AuthHelper.load_user!(session)
     socket = assign(socket, :current_user, current_user)
 
-    {:ok,
-     assign(
-       socket,
-       :products,
-       Products.list_products() |> Enum.map(fn prod -> [key: prod.name, value: prod.id] end)
-     )}
+    products =
+      Products.list_products() |> Enum.map(fn prod -> [key: prod.name, value: prod.id] end)
 
-    {:ok, socket}
+    products = Enum.concat([[key: "", value: ""]], products)
+    {:ok, assign(socket, :products, products)}
   end
 
   @impl true
@@ -37,11 +34,7 @@ defmodule ManateeWeb.ApplicationLive.Show do
      |> assign(:areas, areas)
      |> assign(:gdds, gdds)
      |> assign(:application, application)
-     |> assign(:page_title, page_title(socket.assigns.live_action))
-     |> assign(
-       :products,
-       Products.list_products() |> Enum.map(fn prod -> [key: prod.name, value: prod.id] end)
-     )}
+     |> assign(:page_title, page_title(socket.assigns.live_action))}
   end
 
   defp page_title(:show), do: "Show Application"

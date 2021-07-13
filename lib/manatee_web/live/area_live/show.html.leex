@@ -10,24 +10,49 @@
     return_to: Routes.area_show_path(@socket, :show, @area) %>
 <% end %>
 
-<ul>
+<div class="bg-white shadow overflow-hidden sm:rounded-lg">
+  <div class="px-4 py-5 sm:px-6">
+    <h3 class="text-lg leading-6 font-medium text-gray-900">Area Information</h3>
+  </div>
+  <div class="border-t border-gray-200">
+    <dl>
+      <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-6 md:grid md:grid-cols-2 hover:bg-gray-50 md:space-y-0 space-y-1 p-4 border-b">
+        <p class="text-sm font-medium text-gray-500">
+          Name
+        </dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:mt-0">
+          <%= @area.name %>
+        </dd>
+      </div>
+      <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-6 md:grid md:grid-cols-2 hover:bg-gray-50 md:space-y-0 space-y-1 p-4 border-b">
+        <dt class="text-sm font-medium text-gray-500">
+          Area
+        </dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:mt-0">
+          <%= @area.area %> <%= @area.area_unit %>
+        </dd>
+      </div>
+      <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-6 md:grid md:grid-cols-2 hover:bg-gray-50 md:space-y-0 space-y-1 p-4 border-b">
+        <dt class="text-sm font-medium text-gray-500">
+          Recent Applications
+        </dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:mt-0">
+          <ul>
+            <%= for application <- @area.applications do %>
+              <li>
+                <%= application.description %>
+                <strong>Applied At:</strong>
+                <%= application.applied_at %>
+              </li>
+            <% end %>
+          </ul>
+        </dd>
+      </div>
+    </dl>
+  </div>
+</div>
 
-  <li>
-    <strong>Name:</strong>
-    <%= @area.name %>
-  </li>
-
-  <li>
-    <strong>Area:</strong>
-    <%= @area.area %>
-  </li>
-
-  <li>
-    <strong>Area unit:</strong>
-    <%= @area.area_unit %>
-  </li>
-
-</ul>
+<%= live_component ManateeWeb.AreaLive.AreaNutritionDetailComponent, id: @area.id %>>
 
 <span><%= live_patch "Edit", to: Routes.area_show_path(@socket, :edit, @area), class: "button" %></span>
 <span><%= live_redirect "Back", to: Routes.area_index_path(@socket, :index) %></span>

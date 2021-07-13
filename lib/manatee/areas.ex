@@ -11,6 +11,9 @@ defmodule Manatee.Areas do
   alias Manatee.Areas.Area
   alias Manatee.Locations
 
+  alias Manatee.Applications.Application
+  alias Manatee.Applications.ApplicationProduct
+
   @doc """
   Returns the list of areas.
 
@@ -49,6 +52,24 @@ defmodule Manatee.Areas do
 
   """
   def get_area!(id), do: Repo.get!(Area, id)
+
+  def get_area_nutrient_totals(area_id) do
+    from(
+      app_pro in ApplicationProduct,
+      join: app in Application,
+      on: app_pro.application_id == app.id,
+      where: app.area_id == ^area_id,
+      select: %{
+        applied_at: app.applied_at,
+        description: app.description,
+        total_n: sum(app_pro.n_lbs_per_m),
+        total_p: sum(app_pro.p_lbs_per_m),
+        total_k: sum(app_pro.k_lbs_per_m)
+      },
+      group_by: [app.description, app.id]
+    )
+    |> Repo.all()
+  end
 
   @doc """
   Creates a area.

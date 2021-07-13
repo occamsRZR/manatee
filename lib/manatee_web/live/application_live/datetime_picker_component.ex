@@ -12,7 +12,6 @@ defmodule ManateeWeb.ApplicationLive.DateTimePickerComponent do
     class="flatpickr container mx-auto col-span-6 sm:col-span-6 mt-5"
     >
     <div class="flex align-middle align-content-center">
-    <%= IO.inspect(@f) %>
       <input
           x-ref="datetime"
           type="text"
