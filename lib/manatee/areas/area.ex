@@ -2,6 +2,7 @@ defmodule Manatee.Areas.Area do
   use Ecto.Schema
   import Ecto.Changeset
 
+  alias Manatee.Applications.Application
   alias Manatee.Locations.Location
 
   @primary_key {:id, :binary_id, autogenerate: true}
@@ -18,6 +19,7 @@ defmodule Manatee.Areas.Area do
       ]
 
     belongs_to(:location, Location)
+    has_many(:applications, Application)
 
     timestamps()
   end
