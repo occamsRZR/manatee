@@ -49,7 +49,6 @@ defmodule ManateeWeb.AreaLive.AreaNutritionDetailComponent do
       end)
 
     ds = Dataset.new(data, ["applied_at", "N Total", "P Total", "K Total"])
-    IO.inspect(ds)
 
     options = [
       mapping: %{category_col: "applied_at", value_cols: ["N Total", "P Total", "K Total"]},

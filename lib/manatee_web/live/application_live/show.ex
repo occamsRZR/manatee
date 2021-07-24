@@ -19,25 +19,19 @@ defmodule ManateeWeb.ApplicationLive.Show do
   end
 
   @impl true
-  def handle_params(
-        %{"id" => id, "application_product_id" => application_product_id},
-        _,
-        socket
-      ) do
-    application = Applications.get_application!(id)
-    application_product = Applications.get_application_product!(application_product_id)
-    {:ok, _} = Applications.delete_application_product(application_product)
-
-    {
-      :noreply,
-      socket
-      |> put_flash(:info, "Product deleted from application")
-      |> push_redirect(to: Routes.application_show_path(socket, :show, application))
-    }
+  def handle_params(params, _url, socket) do
+    {:noreply, apply_action(socket, socket.assigns.live_action, params)}
   end
 
-  @impl true
-  def handle_params(%{"id" => id}, _, socket) do
+  def apply_action(socket, :add_products, %{"id" => id}) do
+    application = Applications.get_application!(id) |> Manatee.Repo.preload(:area)
+    {:ok, gdds} = Applications.gdd_since_application(application)
+
+    socket
+    |> assign(:application, application)
+  end
+
+  def apply_action(socket, :show, %{"id" => id}) do
     current_user = socket.assigns.current_user
 
     areas =
@@ -47,16 +41,47 @@ defmodule ManateeWeb.ApplicationLive.Show do
     application = Applications.get_application!(id) |> Manatee.Repo.preload(:area)
     {:ok, gdds} = Applications.gdd_since_application(application)
 
-    {:noreply,
-     socket
-     |> assign(:areas, areas)
-     |> assign(:gdds, gdds)
-     |> assign(:application, application)
-     |> assign(:page_title, page_title(socket.assigns.live_action))}
+    socket
+    |> assign(:areas, areas)
+    |> assign(:gdds, gdds)
+    |> assign(:application, application)
+    |> assign(:page_title, page_title(socket.assigns.live_action))
+  end
+
+  def apply_action(
+        socket,
+        :delete_product,
+        %{"id" => id, "application_product_id" => application_product_id}
+      ) do
+    application = Applications.get_application!(id)
+    application_product = Applications.get_application_product!(application_product_id)
+    {:ok, _} = Applications.delete_application_product(application_product)
+
+    socket
+    |> put_flash(:info, "Product deleted from application")
+    |> push_redirect(to: Routes.application_show_path(socket, :show, application))
+  end
+
+  def apply_action(
+        socket,
+        :edit_product,
+        %{"id" => id, "application_product_id" => application_product_id} = params
+      ) do
+    application = Applications.get_application!(id) |> Manatee.Repo.preload(:area)
+    application_product = Applications.get_application_product!(application_product_id)
+    # {:ok, _} = Applications.delete_application_product(application_product)
+    {:ok, gdds} = Applications.gdd_since_application(application)
+
+    socket
+    |> assign(:application_product, application_product)
+    |> assign(:gdds, gdds)
+    |> assign(:application, application)
+    |> assign(:page_title, page_title(socket.assigns.live_action))
   end
 
   defp page_title(:show), do: "Show Application"
   defp page_title(:edit), do: "Edit Application"
   defp page_title(:add_products), do: "Add Products"
   defp page_title(:delete_product), do: "Delete Product"
+  defp page_title(:edit_product), do: "Edit Product"
 end
