@@ -63,7 +63,8 @@
             <%= application_product.interval_unit %>
             <strong>Rate:</strong>
             <%= application_product.rate %>
-            <%= application_product.rate_unit %>
+            <%= application_product.rate_unit %> |
+            <span><%= live_patch "delete", to: Routes.application_show_path(@socket, :delete_product, @application, application_product), class: "button" %></span>
           </li>
           <% end %>
         </ul>

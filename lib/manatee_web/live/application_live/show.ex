@@ -19,6 +19,24 @@ defmodule ManateeWeb.ApplicationLive.Show do
   end
 
   @impl true
+  def handle_params(
+        %{"id" => id, "application_product_id" => application_product_id},
+        _,
+        socket
+      ) do
+    application = Applications.get_application!(id)
+    application_product = Applications.get_application_product!(application_product_id)
+    {:ok, _} = Applications.delete_application_product(application_product)
+
+    {
+      :noreply,
+      socket
+      |> put_flash(:info, "Product deleted from application")
+      |> push_redirect(to: Routes.application_show_path(socket, :show, application))
+    }
+  end
+
+  @impl true
   def handle_params(%{"id" => id}, _, socket) do
     current_user = socket.assigns.current_user
 
@@ -40,4 +58,5 @@ defmodule ManateeWeb.ApplicationLive.Show do
   defp page_title(:show), do: "Show Application"
   defp page_title(:edit), do: "Edit Application"
   defp page_title(:add_products), do: "Add Products"
+  defp page_title(:delete_product), do: "Delete Product"
 end
