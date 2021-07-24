@@ -69,8 +69,6 @@ defmodule Manatee.Applications.ApplicationProduct do
          %{"product_id" => product_id, "rate" => rate} = attrs
        ) do
     with product <- Manatee.Products.get_product!(product_id) do
-      IO.inspect(changeset)
-
       changeset =
         change(changeset, %{
           n_lbs_per_m: calculate_lbs_per_m(rate_casted, product.n_analysis),

@@ -6,26 +6,25 @@ defmodule ManateeWeb.ApplicationLive.AddProductsComponent do
 
   @impl true
   def update(
-        %{application: application} = assigns,
+        %{application: application, application_product: application_product} = assigns,
         socket
       ) do
-    changeset = Applications.change_application(application)
-
     interval_units =
       Ecto.Enum.values(ApplicationProduct, :interval_unit) |> Enum.map(&Atom.to_string/1)
 
     rate_units = Ecto.Enum.values(ApplicationProduct, :rate_unit) |> Enum.map(&Atom.to_string/1)
 
-    application_product_changeset =
-      Applications.change_application_product(%ApplicationProduct{application_id: application.id})
+    application_product_changeset = Applications.change_application_product(application_product)
+
+    IO.inspect(assigns)
 
     {:ok,
      socket
      |> assign(assigns)
-     |> assign(:changeset, changeset)
      |> assign(:interval_units, interval_units)
      |> assign(:rate_units, rate_units)
      |> assign(:product, nil)
+     |> assign(:application, application)
      |> assign(:application_product_changeset, application_product_changeset)}
   end
 
@@ -178,7 +177,23 @@ defmodule ManateeWeb.ApplicationLive.AddProductsComponent do
       {:ok, _application} ->
         {:noreply,
          socket
-         |> put_flash(:info, "Application Product updated successfully")
+         |> put_flash(:info, "Application Product created successfully")
+         |> push_redirect(to: socket.assigns.return_to)}
+
+      {:error, %Ecto.Changeset{} = changeset} ->
+        {:noreply, assign(socket, :changeset, changeset)}
+    end
+  end
+
+  defp save_application_product(socket, :edit_product, application_params) do
+    case Applications.update_application_product(
+           socket.assigns.application_product,
+           application_params
+         ) do
+      {:ok, _application} ->
+        {:noreply,
+         socket
+         |> put_flash(:info, "Application Product edited successfully")
          |> push_redirect(to: socket.assigns.return_to)}
 
       {:error, %Ecto.Changeset{} = changeset} ->

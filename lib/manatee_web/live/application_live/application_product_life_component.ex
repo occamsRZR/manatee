@@ -61,8 +61,6 @@ defmodule ManateeWeb.ApplicationLive.ApplicationProductLifeComponent do
   def render_lifespan_text(_, _), do: nil
 
   def render(assigns) do
-    IO.inspect(assigns.application.area.grass_type)
-
     ~L"""
 
     <!-- Define the width model within parent div -->
