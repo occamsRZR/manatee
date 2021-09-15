@@ -19,6 +19,7 @@ defmodule ManateeWeb.ApplicationLive.DateTimePickerComponent do
           data-input
           placeholder="Select.."
           autocomplete="off"
+          phx-update="ignore"
           name="application[applied_at]"
           class="block w-full px-2 border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-l-md shadow-sm"
           value='<%= @f.data.applied_at |> Timex.format!("%b %d, %Y %l:%M %p", :strftime) %>'
