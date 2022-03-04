@@ -14,9 +14,6 @@ RUN apt-get update && \
     mix local.rebar --force && \
     mix deps.get && \
     npm ci --prefix assets && \
-    cd assets && \
-    npx browserslist@latest --update-db && \
-    cd /app && \
     mix do compile
 
 EXPOSE 4000
