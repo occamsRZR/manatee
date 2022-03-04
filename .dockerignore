@@ -1,4 +1,11 @@
+.git
+.github
+.gitignore
 pgdata
+Dockerfile
+docker-compose.yml
+*/node_modules*
+
 # The directory Mix will write compiled artifacts to.
 /_build/
 
