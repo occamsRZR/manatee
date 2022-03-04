@@ -1,14 +1,19 @@
 use Mix.Config
 
+toBool = fn
+  "true", _ -> true
+  "false", _ -> false
+  nil, default -> default
+end
 # Configure your database
 config :manatee, Manatee.Repo,
-  username: "postgres",
-  password: "postgres",
-  database: "manatee_dev",
-  hostname: "localhost",
-  port: 5434,
-  show_sensitive_data_on_connection_error: true,
-  pool_size: 10
+  username: System.get_env("POSTGRES_USER") || "postgres",
+  password: System.get_env("POSTGRES_PASSWORD") || "postgres",
+  database: System.get_env("POSTGRES_DB") || "manatee_dev",
+  hostname: System.get_env("POSTGRES_HOST") || "localhost",
+  port: String.to_integer(System.get_env("POSTGRES_PORT") || "5534"),
+  show_sensitive_data_on_connection_error: toBool.(System.get_env("DBSHOWSENSITIVE"), true),
+  pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10")
 
 # For development, we disable any cache and enable
 # debugging and code reloading.
@@ -17,15 +22,15 @@ config :manatee, Manatee.Repo,
 # watchers to your application. For example, we use it
 # with webpack to recompile .js and .css sources.
 config :manatee, ManateeWeb.Endpoint,
-  http: [port: 4000],
-  debug_errors: true,
-  code_reloader: true,
-  check_origin: false,
+  http: [port: String.to_integer(System.get_env("HTTP_PORT") || "4000")],
+  debug_errors: toBool.(System.get_env("DEBUG_ERRORS"), true),
+  code_reloader: toBool.(System.get_env("CODE_RELOADER"), true),
+  check_origin: toBool.(System.get_env("CHECK_ORIGIN"), false),
   watchers: [
     node: [
       "node_modules/webpack/bin/webpack.js",
       "--mode",
-      "development",
+      System.get_env("WEBPACK_MODE") || "development",
       cd: Path.expand("../assets", __DIR__)
     ]
   ]
