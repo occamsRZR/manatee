@@ -6,6 +6,9 @@ on:
       - 'main'
     tags:
       - 'v*'
+  pull_request:
+    branches:
+      - main
 
 jobs:
   docker:
@@ -44,7 +47,9 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: .
-          platforms: "linux/386, linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x"
+          # Due to build time, only building the one currently needed.
+          # If needed, we can add more platforms when requested.
+          platforms: "linux/amd64"
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}

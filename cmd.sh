@@ -1,6 +1,7 @@
-#!/bin/bash
-source /root/.bashrc
-nvm use v14.15.4
+#!/usr/bin/env bash
+
+# shellcheck source=/dev/null
+source ~/.bashrc || exit
 cd /app/assets || exit
 npx browserslist@latest --update-db
 cd /app || exit
